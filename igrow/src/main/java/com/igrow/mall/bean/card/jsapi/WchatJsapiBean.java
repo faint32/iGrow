@@ -38,7 +38,7 @@ public class WchatJsapiBean {
 	
 	/**
 	* @Title getWchatBatchAddCardReqData
-	* @Description TODO【这里用一句话描述这个方法的作用】
+	* @Description TODO【这里用一句话描述这个方法的作用】 
 	* @param cardId
 	* @param code
 	* @param openid
