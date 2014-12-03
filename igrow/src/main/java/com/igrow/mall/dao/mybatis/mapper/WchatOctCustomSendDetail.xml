@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.WchatOctCustomSendDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="WchatOctCustomSendRM" type="TwchatOctCustomSendDetail">
+		<id property="id" column="id" />
+			
+		<result property="fromUser" column="from_user"/>
+		<result property="toUser" column="to_user"/>
+		<result property="msgType" column="msg_type"/>
+		<result property="content" column="content"/>
+		<result property="supplierId" column="supplier_id"/>
+		<result property="supplierDesignerId" column="supplier_designer_id"/>
+		<result property="wchatKfAccount" column="wchat_kf_account"/>
+		<result property="createDate" column="create_date"/>
+		<result property="modifyDate" column="modify_date"/>
+		<result property="createOperator" column="create_operator"/>
+		<result property="modifyOperator" column="modify_operator"/>	
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="WchatOctCustomSendRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_oct_custom_send_detail WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="TwchatOctCustomSendDetail"  keyProperty="id" useGeneratedKeys="true" flushCache="false">
+		<![CDATA[
+			insert into t_wchat_oct_custom_send_detail 
+				(from_user,to_user,msg_type,content,supplier_id,supplier_designer_id,wchat_kf_account,
+				create_date,modify_date,create_operator,modify_operator)
+					values
+				(#{fromUser},#{toUser},#{msgType},#{content},#{supplierId},#{supplierDesignerId},#{wchatKfAccount},
+				#{createDate},#{modifyDate},#{createOperator},#{modifyOperator})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="TwchatOctCustomSendDetail" flushCache="false">
+			update t_wchat_oct_custom_send_detail 
+				  set
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator},
+					where id = #{id}
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="TwchatOctCustomSendDetail" flushCache="false">
+		<![CDATA[
+			update t_wchat_oct_custom_send_detail 
+				  set
+				  is_delete = 1,
+				  status = 0
+				  where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="false">
+		<![CDATA[
+			SELECT count("id") FROM t_wchat_oct_custom_send_detail
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="WchatOctCustomSendRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_oct_custom_send_detail where 1 = 1
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="WchatOctCustomSendRM" useCache="false">
+			SELECT * FROM t_wchat_oct_custom_send_detail  where 1 = 1
+				 <if test="orderBy != null and order != null">
+				 	ORDER BY ${orderBy} ${order}
+				 </if>
+				 <if test="firstIndex != null and pageSize != null">
+				 	LIMIT #{firstIndex} ,#{pageSize}
+				 </if>
+				
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="false">
+			SELECT count(`id`) FROM t_wchat_oct_custom_send_detail where 1=1
+	</select>
+	
+	<select id="findLastBy" parameterType="String" resultMap="WchatOctCustomSendRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_oct_custom_send_detail WHERE to_user = #{id} 
+			ORDER BY create_date desc
+			LIMIT 0,1
+		]]>
+	</select>
+	
+</mapper>

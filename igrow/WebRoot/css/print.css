@@ -1,0 +1,84 @@
+*{ margin:0; padding:0;}
+em, cite, i{ font-style:normal;}
+a{ text-decoration:none; color:333;}
+li, ul{ list-style-type:none;}
+.clear{ clear:both;}
+img, a img{ border:none}
+body{ color:#333; font-size:9.5pt; line-height:150%; font-family: Arial, SimSun, Sans-Serif;}
+/* new print */
+.receipt_details_list{ width:760px;color:#333; font-family:microsoft yahei; font-size:14px; padding-bottom:5px;}
+.receipt_details_list li{ height:17px; line-height:17px; padding-bottom:15px; float:left; width:100%;}
+.receipt_details_list li.rdl_L{ width:435px;}
+.receipt_details_list li.rdl_S{ width:325px;}
+.receipt_details_list li i�� .receipt_details_list li b{ float:left;}
+.rdl_title{ width:75px;}
+.stock_rmb{ font-family:microsoft yahei;}
+.longName210{ width:210px;}
+/* new print */
+.wrapper{margin: 0 auto;padding:15mm 13mm 15mm 15mm;text-align: left; width: 182mm;}
+.stockDet table{border:1px solid #000;border-collapse:collapse; color:#333}
+.stockDet table th, .stockDet table td{border:1px solid #000;border-collapse:collapse; text-align:center; height:auto;}
+.stockDet table{ width:100%;}
+.stockDet table th{ height:10mm; padding:1mm 0}
+.stockDet table td{ padding:2mm 0;word-break: break-all;}
+.emputmm{ display:block; padding:0 3mm; text-align:left}
+#rmb{ font-family:Arial, Helvetica, sans-serif; font-style:normal}
+.rmbIn{ font-family:Microsoft YaHei;}
+/* new stock print */
+.stockDet h2{ border-bottom:1px solid #e5e5e5; padding-bottom:4mm;}
+.stockDet .receipt_details_list{ width:100%; color:#000000; font-size:9.5pt; padding:6mm 0 4mm; position:relative}
+.stockDet .receipt_details_list li{ height:17px; line-height:17px; padding-bottom:2mm; float:left; width:100%;}
+.stockDet .receipt_details_list li.rdl_L{ width:96mm;}
+.stockDet .receipt_details_list li.rdl_S{ width:86mm;}
+.stockDet .receipt_details_list li i, .stockDet .receipt_details_list li b{ float:left;}
+.stockDet .rdl_title{ width:18mm;}
+.responsible{ padding:4mm 0; width:100%; font-size:9.5pt}
+.responsible li{ float:left;}
+.responsible .res_one{ width:75mm;}
+.responsible .res_two{ width:74mm;}
+.responsible .res_three{ width:32mm;}
+.stockChapter{width:127px; height:126px; position:absolute; right:0; bottom:-1px;}
+.print_top{ padding:5mm 13mm 0 15mm; width: 182mm; margin:0 auto;}
+#print_stockArea th{ background:none;}
+.empty5and5{ padding:0 5px;}
+.name_account{line-height:23px; float:left}
+.stockDet table td.no_paddingTd{padding:0;}
+.title_abou{ width:37mm; border-right:1px solid #000; text-align:center; padding:2mm 0; float:left; height:21px;}
+#NumCapital{float:left;padding:2mm 1mm}
+.stockDet h1{ font-family:Arial,SimSun,Sans-Serif; font-size:16pt; padding:13mm 0 4mm; text-align:center; color:#000}
+.font16{ font:16px;}
+.n_redcolor{ color:#f00; vertical-align:middle}
+/* new for hotel stock */
+.n_hotelStock th{ padding:5px 0; height:auto; font-size:12px;}
+.longName135{ width:135px;}
+.hotel_stock_account li{ float:left; padding-right:30px;}
+.n_emputHotel{ padding:20px 0 25px}
+/* new for hotel detail */
+#m_wrapper, .print_top_hotel{ width:268mm; margin:0 auto}
+#m_wrapper{ margin-top:10mm;margin-bottom:10mm;}
+.print_top_hotel{ margin-top:3mm;}
+#m_wrapper .receipt_details_list li{ width:50%; *width:49%;}
+.n_hotelStockT{ font-size:9.5pt;}
+.n_hotelStockT th{ font-weight:bold;}
+.hotel_s_d .responsible li.res_one, .hotel_s_d .responsible .res_two{ width:40%;}
+.hotel_s_d .responsible .res_three{ width:20%;}
+.hotel_account{padding-left:5mm;}
+.hotel_account li{ float:left; padding-right:10mm; font-weight:bold}
+.printBarcode {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    color: #333;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    width: 86px;
+}
+.printBarcode:hover {
+    background-color: #e2e2e2;
+    border: 1px solid #ccc;
+}
+.rightText { float:right;}
+.relativeDiv{ position:relative;}

@@ -1,0 +1,35 @@
+#Contenter{ padding-top:81px;}
+.tab_nav{ height:78px; width:100%; background-color:#f4f4f4;}
+.tabwarp{ width:400px; margin:0 auto; height:78px; line-height:78px; color:#777;}
+.tabwarp li{ width:200px; float:left; height:78px; position:relative}
+.tabwarp li a{ display:block; cursor:pointer}
+.tab_l_nav{ text-align:left;}
+.tab_r_nav{ text-align:right;}
+.selectTag a{ color:#3db3f2;}
+.ge_r0{ display:none; width:29px; height:14px; position:absolute; left:24px; bottom:-14px;}
+.ge_r0_rightDown{ left:inherit; right:35px;}
+.selectTag .ge_r0{ display:block;}
+
+.tagContent{ display:none;}
+.selectTag{ display:block;}
+
+.content_table_in{ width:620px; margin:31px 0 0 0; padding-left:9%;}
+.tagContent ul li{ padding:15px 0; width:100%}
+.tagContent ul li label{ text-align:right; padding-right:18px; color:#000; width:125px; float:left; height:46px; line-height:46px; font-size:18px;}
+.tagContent ul li input{ height:26px; padding:9px 5px; width:465px; line-height:26px; border:1px solid #ccc; background-color:#fff; font-size:16px; outline:none}
+.tagContent ul li input:focus{ border:1px solid #3db3f2;  outline:none}
+.tagContent ul li.btn_submit_line{ padding-top:29px;}
+
+.textarea_text{ width:465px; border:1px solid #ccc; height:100px; padding:5px; font-size:16px;}
+
+a.btn_submit{ width:176px; height:48px; line-height:48px; background-color:#ef540c; border-radius:3px; text-align:center; color:#fff; float:left; cursor:pointer; margin-bottom:60px;}
+
+.tagContent ul li input.red_wrong{border:1px solid #f00;}
+
+.tip_layer{ background:url(images/TipBox.png) no-repeat 0 0; width:400px; height:206px; left:50%; top:50%; margin:-103px 0 0 -200px; position:fixed; display:none}
+.tip_in{ padding-top:65px; text-align:center}
+.toHome{ padding-top:11px; color:#3db3f2; font-size:12px; font-family:"SimSun";}
+.tip_font{ color:#000; }
+.tip_font img{ vertical-align:middle;}
+.return_home{ width:216px; height:36px; line-height:36px;font-family:"SimSun"; cursor:pointer; color:#fff; background-color:#3db3f2; border-radius:3px; font-size:16px; font-weight:bold; display:block; margin:0 auto; margin-top:18px;}
+.return_home:hover{ color:#fff; background-color:#5abef4;}

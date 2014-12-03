@@ -1,0 +1,191 @@
+*{ margin: 0; padding: 0;}
+a{ text-decoration: none; color:#333; -webkit-tap-highlight-color:rgba(255,0,0,0); -webkit-text-size-adjust:none;}
+ul, li{ list-style-type: none;}
+.clear{ clear: both; line-height:0; font-size:0;}
+cite, i{ font-style: normal;}
+body{ font-family: arial, Microsoft YaHei, Apple LiSung Light; font-size: 14px; line-height: 20px;color:#333;background-color:#fff;}
+/*********wx left cont *******/
+.menu_box{ border:1px solid #e7e7e7; width:901px; }
+.wxContent{ width:903px; margin:20px auto;}
+#menuList{ min-height:500px;}
+.wx_left_cont{ float:left; width:250px;  border-right:1px solid #e7e7e7; }
+.wx_right, .wx_icon_right{float:right; padding:10px 0 0 0; line-height:16px;}
+.wx_right a, .wx_icon_right a{ width:16px; height:16px; display:inline-block; *display:inline; *zoom:1; margin-left:10px;}
+.btn_addWx{ background:url(images/img_icon_wx.png) no-repeat 0 -4460px;}
+.btn_sortWx{ background:url(images/img_icon_wx.png) no-repeat 0 -4408px;}
+.btn_addWx:hover{ background:url(images/img_icon_wx.png) no-repeat 0 -4486px;}
+.btn_sortWx:hover{ background:url(images/img_icon_wx.png) no-repeat 0 -4434px;}
+.wx_icon_right a{ width:14px; height:14px;}
+.btn_addChlidWx{ background:url(images/img_icon_wx.png) no-repeat 0 -3599px;}
+.btn_editWx{ background:url(images/img_icon_wx.png) no-repeat 0 -3647px;}
+.btn_deleteWx{ background:url(images/img_icon_wx.png) no-repeat 0 -3695px;}
+.wx_title{ padding:0 12px; line-height:36px; background-color:#f4f5f9; border-bottom:1px solid #e7e7e7;}
+.wx_list .h2_title{ line-height:33px; font-size:14px; font-weight:lighter; font-family:Microsoft YaHei; background-color:#f4f5f9; padding:0 12px; }
+.wx_list li{ line-height:32px; padding:0 12px 0 27px;clear: both;}
+.wx_right_cont{ float:right; width:650px;}
+.inputUrl{ border:1px solid #e7e7e7; width:500px; padding:10px; height:26px; margin:30px auto; display:block; height:100px; font-size:14px;font-family: arial, Microsoft YaHei}
+.block_title_wx{ padding:20px 0;}
+.btnWX { width:86px; height:28px; line-height:28px; text-align:center; color:#fff; background-color:#44b549; display:block; border-radius:5px; margin-top:5px;}
+.btnWX .js_btn{
+    background-color: transparent;
+    border: 0 none;
+    display: block;
+    height: 100%;
+    outline: 0 none;
+    overflow: visible;
+	width:86px;
+	color:#fff;
+}
+
+/*********tab tab切换********/ 
+.tagContent{ display:none;}
+.tabCont, .tabCont_title {
+    position: relative;
+    width:100%;
+	background-color:#f4f5f9;
+	height:20px;
+	padding:8px 0;
+	border-bottom:1px solid #e7e7e7;
+}
+.tabCont ul {
+	width:100%;
+}
+.selectTag {
+    display: block;
+}
+.tabCont ul li {
+    float: left;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    width: 33%;
+	cursor:pointer;
+}
+.tabCont ul li:last-child{ width:34%;}
+#tabwarp a{ display:block;}
+.tabCont ul li.selectTag {
+    font-size: 14px;
+    text-align: center;
+	height:20px;
+	color:#555;
+	color:#000;
+
+}
+.tabCont ul li a{ display:block; border-right:1px solid #cecece; height:20px;color:#808080;}
+.tabCont ul li:last-child a{ border-right:none;}
+.tabCont ul li.selectTag a{ color:#4e71bb;}
+.selectTag {
+    display: block;
+}
+strong{ font-weight:300;cursor: pointer;}
+.sort_input{ border:1px solid #e2e2e2; padding:2px; width:30px; height:20px; margin-right:5px; display:none}
+.show_s{ display:none; float:right; padding:3px 0 0 0;}
+.show_s a{ width:46px; float:left; height:26px; margin-left:5px; line-height:26px; text-align:center; background-color:#69C; border-radius:3px; color:#fff;}
+/* ***********   layer *****************/
+.dialog_wrp{ position:fixed; left:0; top:0; width:100%; height:100%; display:none}
+.block_layer{ position:absolute; left:0; top:0; width:100%; height:100%; background-color:#000; opacity:0.7;}
+.dialog{ position:absolute; left:50%; top:45%; z-index:1; width:726px; height:336px; margin:-168px 0 0 -363px; background-color:#fff;}
+.dialog_hd{ height:52px; line-height:52px; background-color:#f4f5f9; padding:0 20px; position:relative}
+.dialog_hd h3 { font-style:normal; font-weight:300; color: #222}
+.pop_closed {background:url(images/img_icon_wx.png) no-repeat scroll 0 -2709px;}
+.pop_closed:hover{ background-position:0 -2735px;}
+.dialog_hd .pop_closed {height: 16px;line-height: 999em;margin-top: -8px;overflow: hidden;position: absolute; right: 20px;top: 50%;width: 16px;}
+.dialog_bd { text-align:center; min-height: 110px; padding: 55px 45px;}
+.frm_label, .frm_input{ display:block;}
+.frm_input{ border:1px solid #e7e7eb; height:20px; line-height:30px; padding:5px 10px; width:300px;}
+.simple_dialog_content {
+    display: inline-block;
+    text-align: left;
+    width: 420px;
+}
+.frm_label {
+    float: none;
+    font-size: 14px;
+    margin-bottom: 0.5em;
+}
+
+
+.dialog_ft {
+    background-color: #f4f5f9;
+    padding: 16px 0;
+}
+.dialog_ft {
+    border-top: 1px solid transparent;
+    box-shadow: none;
+    margin: 0;
+    text-align: center;
+}
+
+
+
+.dialog_ft .btn {
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+}
+.btn.btn_input {
+    min-width: 104px;
+}
+.btn.btn_input {
+    padding: 0;
+}
+.btn_primary {
+    background-color: #44b549;
+    border-color: #44b549;
+    color: #fff;
+}
+.btn_primary:hover {
+    background-color: #2f9833;
+}
+.btn {
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    overflow: visible;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+	min-width: 104px;
+}
+.btn_primary button {
+    color: #fff;
+}
+.btn button {
+    background-color: transparent;
+    border: 0 none;
+    display: block;
+    height: 100%;
+    outline: 0 none;
+    overflow: visible;
+	width:104px;
+}
+.btn_default {
+    background-color: #fff;
+    border-color: #e6e7ec;
+    color: #222;
+}
+.btn_default:hover {
+    background-color: #e6e7ec;
+}
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    cursor: pointer;
+}
+.action_tips{margin-top:200px; text-align:center;}
+.btn_save_wx{padding-top:50px; text-align:center;}
+.btn_saveWX{ width:86px; display:inline-block; border-radius:3px; height:28px; line-height:28px; text-align:center; color:#fff; background-color:#44b549}
+.action_tipsFont_left{padding:10px 0; color:#f00}
+.action_tipsFont{ text-align:center; padding:10px 0;color:#f00}
+.tabCont_title p{ padding-left:10px;}
+
+
+
+
+
+
+
+
+

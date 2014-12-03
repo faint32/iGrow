@@ -1,0 +1,64 @@
+*{ margin: 0; padding: 0;}
+a{ text-decoration: none; color:#333; -webkit-tap-highlight-color:rgba(255,0,0,0); -webkit-text-size-adjust:none;}
+ul, li{ list-style-type: none;}
+.clear{ clear: both; line-height:0; font-size:0;}
+cite, i{ font-style: normal;}
+body{ font-family: arial, Microsoft YaHei, Apple LiSung Light, Microsoft YaHei; font-size: 14px; line-height: 20px; -webkit-tap-highlight-color:rgba(0,0,0,0); -webkit-user-select:none; -webkit-text-size-adjust:none;}
+body{ -webkit-tap-highlight-color:rgba(255,0,0,0); -webkit-text-size-adjust:none; background-color:#ffffff;}
+/*#contenter{ overflow-y:auto; overflow-x: hidden; overflow-scrolling:touch; -webkit-overflow-scrolling:touch;}*/
+#Footer{ height: 50px; width:100%; background:#fff;}
+.black_layer{ position:fixed; left:0; top:0; width:100%; height:100%; display:none}
+.menu{ float:left; width: 100%; height: 100%; }
+.ellipsis{ width:80px; overflow:hidden;white-space: nowrap;text-overflow: ellipsis; display:block;}
+.specification_span span{ padding-right:5px;}
+.specification_span{display:block; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+
+.bubbleAlert {
+    display: block;
+    height: 100%;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    left:0;
+    top:0;
+}
+.loadBg {
+    background: none repeat scroll 0 0 #000000;
+    border-radius: 5px;
+    display: block;
+    height: 78px;
+    left: 50%;
+    margin-left: -71px;
+    margin-top: -39px;
+    opacity: 0.8;
+    position: absolute;
+    top: 50%;
+    width: 142px;
+    z-index: 100;
+}
+.loadPic {
+    background: url("images/337.gif") no-repeat scroll 13px center / 36px 36px rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    font-size: 15px;
+    height: 78px;
+    left: 50%;
+    line-height: 78px;
+    margin-left: -71px;
+    margin-top: -39px;
+    padding-left: 67px;
+    position: absolute;
+    top: 50%;
+    width: 142px;
+    z-index: 10000;
+}
+.alipay_btn{ width:110px; height:28px; line-height:28px; border:1px solid #50b5eb; font-size:15px; display:block; border-radius:15px; background-color:#50b5eb; color:#fefefe; text-align:center; position:absolute; right:4%; top:9px;}
+.alipay_btn:active, .white_btn{ border:1px solid #ccc; background:none; color:#999}
+.amount_price{ float:left; width:100%; height:30px; line-height:30px; padding:9px 0; background-color:#f8f8f8; border-top:1px solid #ccc; border-bottom:1px solid #ccc; position:relative;}
+
+/* 2014-7-17 for wrong Tip */
+.wrong_layer{ position:fixed; left:0; top:0; width:100%; height:100%; display:none}
+.wrong_cont{ width:80%;position:absolute; left:50%; top:50%; margin-left:-40%; z-index:11111; margin-top:-57px; background-color:rgba(0,0,0,0.7); border-radius:5px; box-shadow:0 1px 0 rgba(255,255,255,0.3) inset}
+.wrong_summary{ padding:20px 40px;}
+.wrong_summary p{ padding:0 0 15px; text-align:center; font-size:17px;text-shadow: 0 1px 0 #000; color:#fff;}
+.btn_wrongTip{ padding:0 1%;}
+.btn_YesTip{ width:100%; margin:0 auto; display:block; height:45px; line-height:45px; text-align:center; font-size:18px;text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); color:#fff; background-color:#ff5f1e; border-radius:5px;}

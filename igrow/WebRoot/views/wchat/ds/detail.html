@@ -1,0 +1,438 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-control" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width; maximum-scale=1.0;  user-scalable=no; initial-scale=1.0" />
+    <title>设计师详情</title>
+    <link rel="stylesheet" type="text/css" href="/borMall/css/wchat/masterPage.css">
+    <link rel="stylesheet" type="text/css" href="/borMall/css/wchat/designDetail.css">
+    <script type="text/javascript" src="/borMall/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/borMall/js/wchat/load.js"></script>
+    <script type="text/javascript">
+        //var serverUrl = "http://115.29.232.103:8080/";
+        //var serverUrl = "http://127.0.0.1:8080/";
+        //var serverUrl = "http://192.168.1.121:8080/";
+       	var serverUrl = "http://www.1ct.cc:8080/";
+    	var listCount = 0;
+    	var en_length;
+        var sUserAgent = navigator.userAgent.toLowerCase();
+        var bIsAndroid = sUserAgent.match(/android/i) == "android";
+        if (bIsAndroid) {
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+                var docH = document.documentElement.clientHeight;
+                if ($("body").height() - 1 < docH) {
+                    $("#contenter").animate({ "height": docH + "px" }, 500);
+                }
+                WeixinJSBridge.call('hideToolbar');
+            });
+
+        }
+        function peo_detail_div(a) {
+            $(a).toggleClass("show_child");
+            if ($(a).hasClass("show_child")) {
+                scrollTopV = $(".pro_detail_title").offset().top;
+                $("html, body").animate({ scrollTop: scrollTopV }, 500);
+                //$(".selectSpecification").show();
+                $("#pro_detail_cont").slideDown();
+            } else {
+                //$(".selectSpecification").fadeOut();
+                $("#pro_detail_cont").slideUp();
+                //scrollTopV = $(".pro_detail_title").offset().top;
+                //$("html, body").animate({ scrollTop: scrollTopV }, 500);
+            }
+        }
+        //页面初始化
+        var sid = "";
+        var openid  = "";
+        $(function(){
+        	//隐藏弹层
+        	//alert(getUrlParam("openid"))
+        	//获取本地openid
+        	openid  = localStorage.ls_openid;
+        	if(openid == "" || openid == null || openid == "undefined" || typeof(openid) == "undefined" ){
+        		//获取参数中openid
+        		openid = getUrlParam("opernid"); 
+        	}
+        	//加载详情
+        	var id = getUrlParam("id");
+        	loadDetail(id);
+        	var hid = getUrlParam("hid");
+        	loadProductList(hid);
+        });
+      	//加载详情
+        function loadDetail(id) {
+        	$.ajax({
+    			url : '/borMall/wchat/ds/detail.do?id=' + getUrlParam("id"),
+    			type : 'POST',
+    			async : false,
+    			dataType : "json",
+    			timeout : 5000, //超时时间设置，单位毫秒
+    			async : false,
+    			data : null,
+    			success : function(data) {
+    				   var dataObj = data.d;
+    				   if(dataObj == null || dataObj == "undefined" || typeof(dataObj) == "undefined"){
+    						return;
+    				   }else{
+    					   if(dataObj.status == 0){
+    						   $(".rest").css("display","inline-block");
+    						   $(".contactHe").hide();
+    					   }else if(dataObj.status == 1 || dataObj.status == 2){
+    						   $(".rest").hide();
+    						   $(".contactHe").css("display","inline-block");
+    					   }else{
+    						   $(".rest").css("display","inline-block");
+    						   $(".contactHe").hide();
+    					   }
+    					   sid = dataObj.sid;
+    					   $(".design_name").html(dataObj.name);
+    					   $(".design_simple").html(dataObj.sign);
+    					   $("#Share").html(dataObj.share);
+    					   $("#BuyNum").html(dataObj.sales);
+    					   $(".selectSpecification p").html(dataObj.content);
+    					   $(".selectSpecification img").attr("src",data.imgserver + dataObj.dpimg);
+    					   $(".design_Avatar img").attr("src",data.imgserver + dataObj.dsimg);
+    				   }
+    			}
+        	 });
+        }
+        var pg = 0;    
+        function loadNewList(){
+        	pg = pg +1;
+        	$.ajax({
+        		url : serverUrl+'boraMallH5T/front/product/plist.do?hid=' + getUrlParam("hid")+'&sid='+sid+'&pg='+pg,
+        		type : 'POST',
+        		async : false,
+        		timeout : 5000, //超时时间设置，单位毫秒
+        		dataType : "json",
+        		data : null,
+        		success : function(data) {
+        			var dataObj;
+        			dataObj = data.product.d;
+        			//alert();
+        			if($("#listNum").val() - listCount<= 12){
+              			$(".load_new_list").css("display","none");
+              		}
+        			if(dataObj == null || dataObj == "undefined" || typeof(dataObj) == "undefined" || dataObj.plist == null || dataObj.plist == "undefined" || typeof(dataObj.plist) == "undefined"){
+        				$(".load_new_list").css("display","none");
+        				$(".designList").animate({"paddingBottom":"0px"});
+        				$("#listCount").val(0);
+        			}else{ 
+        				if(dataObj.hname != "该酒店不存在"){
+        					var plists = dataObj.plist;
+        					if(plists.length == "undefined" || typeof(plists.length) == "undefined"){
+        					    var plistsLength = 1;
+        					}else{
+        						var plistsLength = plists.length;
+        					}
+        					for(var i=0;i<plistsLength;i++){
+        						if(i%2==1){
+        							//serverUrl
+        							//data.projectPath
+        							$(".designList").append("<a href='"+serverUrl+"boraMallH5T/views/frontn/product/product.html?pid="+plists[i].pid+"&hid="+getUrlParam("hid")+"'><li><div class='fontShowD Interspace'><div class='font_left width100Css'><h2>[2014-10-14]"+plists[i].pname+"</h2><p class='pro_price'><span class='now_price'>￥<i class='p_price' id='top_Price_now'>"+plists[i].price[0]+"</i></span></p></div><div class='clear'></div></div><div class='roomDetailShow'><img width='100%' src='"+data.imgUrl+plists[i].img+"'></div><div class='fontShowD_out_border'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></li></a>")
+        						   //$(".product_list").append("<a href='product.html?pid="+plists[i].pid+"&hid="+getUrlParam("hid")+"'><li><div class='summery_box'><p class='pro_name'>"+plists[i].pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists[i].price[0]+"</i></b></p><p class='pro_img'><img src='"+data.imgUrl+plists[i].img+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>");
+        						}else{
+        							if(plistsLength == "undefined" || typeof(plists.length) == "undefined"){
+        								$(".designList").append("<a href='"+serverUrl+"boraMallH5T/views/frontn/product/product.html?pid="+plists[i].pid+"&hid="+getUrlParam("hid")+"'><li><div class='fontShowD Interspace'><div class='font_left width100Css'><h2>[2014-10-14]"+plists[i].pname+"</h2><p class='pro_price'><span class='now_price'>￥<i class='p_price' id='top_Price_now'>"+plists[i].price[0]+"</i></span></p></div><div class='clear'></div></div><div class='roomDetailShow'><img width='100%' src='"+data.imgUrl+plists[i].img+"'></div><div class='fontShowD_out_border'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></li></a>")
+        								  //$(".product_list").append("<a href='product.html?pid="+plists.pid+"&hid="+getUrlParam("hid")+"'><li><div class='summery_box'><p class='pro_name'>"+plists.pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists.price[0]+"</i></b></p><p class='pro_img'><img src='"+data.imgUrl+plists.img+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>")
+        							}else{
+        								$(".designList").append("<a href='"+serverUrl+"boraMallH5T/views/frontn/product/product.html?pid="+plists[i].pid+"&hid="+getUrlParam("hid")+"'><li><div class='fontShowD Interspace'><div class='font_left width100Css'><h2>[2014-10-14]"+plists[i].pname+"</h2><p class='pro_price'><span class='now_price'>￥<i class='p_price' id='top_Price_now'>"+plists[i].price[0]+"</i></span></p></div><div class='clear'></div></div><div class='roomDetailShow'><img width='100%' src='"+data.imgUrl+plists[i].img+"'></div><div class='fontShowD_out_border'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></li></a>")
+        								  //$(".product_list").append("<a href='product.html?pid="+plists[i].pid+"&hid="+getUrlParam("hid")+"'><li><div class='summery_box'><p class='pro_name'>"+plists[i].pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists[i].price[0]+"</i></b></p><p class='pro_img'><img src='"+data.imgUrl+plists[i].img+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>")
+        						    }
+        						}
+        						//start_execution();
+        						listCount = listCount + 1;
+        					}
+        					//$(".load_new_list").css("display","none");
+        				}
+        		   }
+        		},
+        		error:function(XMLHttpRequest, textStatus, errorThrown) {
+                   if(textStatus == "timeout"){
+                	   $(".load_new_list").css("display","none");
+                   }else{
+                	   $(".load_new_list").css("display","none");
+                   }
+                }
+        		
+        	});
+        }
+       	
+        function loadProductList(hid) {
+        	$.ajax({
+        		url : serverUrl+'boraMallH5T/front/product/plist.do?hid='+hid+'&sid='+sid+'&pg='+pg,
+        		type : 'POST',
+        		async : false,
+        		timeout : 5000, //超时时间设置，单位毫秒
+        		dataType : "json",
+        		data : null,
+        		success : function(data) {
+        			var dataObj;
+        			$("#hotelName").text(data.message);
+        			//localStorage.l_plistUrl = data.projectPath+"boraMallH5T/views/frontn/product/plist.html?hid="+hid;
+        			dataObj = data.product.d;
+        			if(dataObj == null || dataObj == "undefined" || typeof(dataObj) == "undefined"){
+        				 $("#hotelName").text("暂无商品");
+        				 $("#Header").show();
+        			}else{
+        				$("#listNum").val(dataObj.productNum);
+        				if(dataObj.productNum<= 12){
+        	      			$(".load_new_list").css("display","none");
+        	      		}
+        				$("#hotelName").html(dataObj.hname);
+        				if(dataObj.hname != "该酒店不存在"){
+        					var plists = dataObj.plist;
+        					
+        					if(plists == "undefined" || typeof(plists) == "undefined"){
+        							$(".no_hotel_pro").show();
+        					}else{
+        						if(plists.length == "undefined" || typeof(plists.length) == "undefined"){
+        						    var plistsLength = 1;
+        						}else{
+        							var plistsLength = plists.length;
+        						}
+        						$(".n_first_cont img").attr("src",data.imgUrl+plists[0].img);
+        						$(".n_first_cont a").attr("href","product.html?pid="+plists[0].pid+"&hid="+getUrlParam("hid"));
+        						if(plists.length == 1){
+        							$("#shareImg").val(data.imgUrl+plists[0].img);
+        						}
+        						for(var i=0;i<plistsLength;i++){
+        							if(i%2==1){
+        							   //$(".product_list").append("<a href='product.html?pid="+plists[i].pid+"&hid="+getUrlParam("hid")+"'><li><div class='summery_box'><p class='pro_name'>"+plists[i].pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists[i].price[0]+"</i></b></p><p class='pro_img'><img src='"+data.imgUrl+plists[i].img+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>")
+        								$(".designList").append("<a href='"+serverUrl+"boraMallH5T/views/frontn/product/product.html?pid="+plists[i].pid+"&hid="+getUrlParam("hid")+"'><li><div class='fontShowD Interspace'><div class='font_left width100Css'><h2>["+plists[i].pdate+"]"+plists[i].pname+"</h2><p class='pro_price'><span class='now_price'>￥<i class='p_price' id='top_Price_now'>"+plists[i].price[0]+"</i></span></p></div><div class='clear'></div></div><div class='roomDetailShow'><img width='100%' src='"+data.imgUrl+plists[i].img+"'></div><div class='fontShowD_out_border'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></li></a>")
+        								//data.projectPath
+        								//serverUrl
+        							}else{
+        								if(plistsLength == "undefined" || typeof(plists.length) == "undefined"){
+        									   //$(".product_list").append("<a href='product.html?pid="+plists.pid+"&hid="+getUrlParam("hid")+"'><li><div class='summery_box'><p class='pro_name'>"+plists.pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists.price[0]+"</i></b></p><p class='pro_img'><img src='"+data.imgUrl+plists.img+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>")
+        							   			$(".designList").append("<a href='"+serverUrl+"boraMallH5T/views/frontn/product/product.html?pid="+plists[i].pid+"&hid="+getUrlParam("hid")+"'><li><div class='fontShowD Interspace'><div class='font_left width100Css'><h2>["+plists[i].pdate+"]"+plists[i].pname+"</h2><p class='pro_price'><span class='now_price'>￥<i class='p_price' id='top_Price_now'>"+plists[i].price[0]+"</i></span></p></div><div class='clear'></div></div><div class='roomDetailShow'><img width='100%' src='"+data.imgUrl+plists[i].img+"'></div><div class='fontShowD_out_border'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></li></a>")
+        								}else{
+        									$(".designList").append("<a href='"+serverUrl+"boraMallH5T/views/frontn/product/product.html?pid="+plists[i].pid+"&hid="+getUrlParam("hid")+"'><li><div class='fontShowD Interspace'><div class='font_left width100Css'><h2>["+plists[i].pdate+"]"+plists[i].pname+"</h2><p class='pro_price'><span class='now_price'>￥<i class='p_price' id='top_Price_now'>"+plists[i].price[0]+"</i></span></p></div><div class='clear'></div></div><div class='roomDetailShow'><img width='100%' src='"+data.imgUrl+plists[i].img+"'></div><div class='fontShowD_out_border'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></li></a>")
+        									   //$(".product_list").append("<a href='product.html?pid="+plists[i].pid+"&hid="+getUrlParam("hid")+"'><li><div class='summery_box'><p class='pro_name'>"+plists[i].pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists[i].price[0]+"</i></b></p><p class='pro_img'><img src='"+data.imgUrl+plists[i].img+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>")
+        						        }
+        							}
+        							if(plists != "undefined" && typeof(plists) != "undefined"){
+        								if(plists[0] != "undefined" && typeof(plists[0]) != "undefined"){
+        									$("#shareImg").val(data.imgUrl+plists[0].img);
+        								}else{ 
+        									$("#shareImg").val(data.imgUrl+plists.img);
+        							    }
+        							}
+        							listCount = listCount + 1;
+        							//start_execution();
+        						}
+        						if($("#shareImg").val() == ""){
+        							$(".no_hotel_pro").show();
+        						}
+        					}
+        				}else{
+        					$(".load_new_list").css("display","none");
+        				}
+        		   }
+        		},
+        		error:function(XMLHttpRequest, textStatus, errorThrown) {
+                   if(textStatus == "timeout"){
+                	    $("#hotelName").text("连接超时，请检查网络");
+                	    $("#Header").show();
+                   }else{
+                	    $("#hotelName").text("连接超时，请检查网络");
+                	    $("#Header").show();
+                   }
+                }
+        		
+        	});
+        }
+        //联系设计师
+        function chat(){
+        	//var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8a865f88c23ec791&redirect_uri=http%3A%2F%2F115.29.232.103%3A8080%2FborMall%2F%2Fwchat%2Fds%2Fchat.do%3Fid%3D"+id+"&response_type=code&scope=snsapi_base&state=123123#wechat_redirect";
+        	//alert(getUrlParam("openid"));
+        	//openid = getUrlParam("openid");
+        	//alert("openId1="+openid);
+        	//if(openid == "" || openid == null || openid == "undefined" || typeof(openid) == "undefined" ){
+        		//openId = localStorage.ls_openid;
+        	//}
+        	var url = "/borMall/wchat/ds/chat.do?id="+getUrlParam("id")+"&openId="+openid+"&state=123"; 
+        	//alert(url);
+        	$.ajax({
+    			url : url,
+    			type : 'POST',
+    			async : false,
+    			dataType : "json",
+    			async : false,
+    			data : null,
+    			success : function(data) {
+    				   var status = data.status;
+    				   //alert(status);
+    				   if(status =='y'){
+    					   $("#layer_yes").show();
+    					   return;
+    				   }else{
+    					   $("#layer_no").show();
+    					   return;
+    				   }
+    			}
+        	 });
+        }
+        $(window).scroll(function() {  
+        	///alert("111111111111111111111111111111111");
+            var o = $('#pincontainer');  
+            if(o!=null && o.length !=0){  
+            var hght= document.documentElement.scrollHeight;
+            var clientHeight = document.documentElement.clientHeight;  
+            var top= window.pageYOffset ||   
+                              (document.compatMode == 'CSS1Compat' ?    
+                              document.documentElement.scrollTop :   
+                              document.body.scrollTop);
+            var browserName=navigator.userAgent.toLowerCase();
+        	if(/webkit/i.test(browserName) &&!(/chrome/i.test(browserName) && /webkit/i.test(browserName) && /mozilla/i.test(browserName))){
+        		if(top + 100 >=(parseInt(hght)-clientHeight)){
+        		   	  if($("#listCount").val()==0){
+        		   		  $(".load_new_list").css("display","none");
+        		   		  return;
+        		     	  }else{
+        		     		loadNewList();
+        		     	  }
+        		     }
+        	 
+        	}else{
+        		if(top>=(parseInt(hght)-clientHeight)){
+        		 	  if($("#listCount").val()==0){
+        		 		  $(".load_new_list").css("display","none");
+        		 		  return;
+        		   	  }else{
+        		   		loadNewList();
+        		   	  }
+        		}      
+        		}
+            }
+            $(".designList").find("p").each(function(){
+        		if($(this).hasClass("pro_name")){
+        			var val = $(this).text();
+        		    if(zGetLength(val)>150){
+        		        var ss = getStr(val,150);
+        		        $(this).text(ss+"···");
+        		    }
+        		}
+        	})
+        });
+        
+        //关闭弹层
+        function closeLayer(divid) {
+        	//alert(divid);
+        	//关闭弹层
+            $("#"+divid).css("display", "none");
+        }
+        //关闭窗口
+        function closeWin() {
+        	//关闭弹层
+        	 $("#layer_yes").css("display", "none");
+        	//关闭页面
+        	if (window.WeixinJSBridge) {
+    			WeixinJSBridge.call('closeWindow'); 
+    		}
+        }
+        
+    </script>
+    <script type="text/javascript">
+        function tip_success() {
+            $(".wrong_layer").hide();
+        }
+    </script>
+    <script type="text/javascript">
+        function tip_share() {
+            if (window.WeixinJSBridge) {
+                $("#toFriendArea").css("display", "block");
+            }
+        }
+        function closeThisLayer() {
+            $(".black_layer_payAfter").hide();
+        }
+    </script>
+</head>
+<body id="pincontainer">
+    <input type="hidden" id="shareUrl" />
+    <input type="hidden" id="pro_titlehidden" />
+    <input type="hidden" id="imageShow" />
+    <div id="contenter">
+        <div class="contBody">
+        	<div class="design_detail_summary">
+        		<p class="design_Avatar"><img src="/borMall/css/wchat/images/no_pic.png" width="64"></p>
+        		<p class="design_name"></p>
+        		<p class="design_simple"></p>
+        		<p class="design_shareNum"><i id="Share">0</i>人分享<br /><i id="BuyNum">0</i>人购买</p>
+        		<div class="designStyle">
+        			<span class="rest" ><img src="/borMall/css/wchat/images/rest_icon.png" width="16">TA在休息</span>
+        			<span class="contactHe" onclick="chat();"><img src="/borMall/css/wchat/images/contactHe_icon.png" width="16">联系TA</span>
+        		</div>
+        	</div>
+            <div class="spe_infor_n">
+                <div class="pro_detail_addNew">
+                    <div class="s-detail">
+                        <div class="pro_detail_title" onclick="peo_detail_div(this)">
+                            <h4>
+                                <label class="name_label">TA的简介</label>
+                            </h4>
+                        </div>
+                    </div>
+                    <div id="pro_detail_cont">
+                        <div class="Interspace">
+                            <div class="selectSpecification">
+                            	<img src="/borMall/css/wchat/images/no_pic.png" width="100%">
+                            	<p><!--设计师介绍--></p>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="contenter">
+	            <ul class="designList">
+	            	
+	            </ul>
+	            <div class="clear"></div>
+    			<div class="load_new_list"><img src ="/borMall/css/wchat/images/loading.gif" width="30px" height="30px" />加载中...</div>
+            </div>
+        </div>
+        <input type="hidden" id="listCount" value="1"/>
+		<input type="hidden" id="listNum"/>
+        <style type="text/css">
+            body {
+                background-color: #fff;
+            }
+        </style>
+        <!-- 提示弹层 -->
+        <div class="layer_yN" id="layer_yes">
+			<div class="block_layer">
+		    </div>
+		    <div class="tipYsNo">
+		    	<p class="tip_title">亲：）已帮你接通，请返回聊天窗口</p>
+		        <p class="btn_y_n">
+		        	<a class="btn_submit btn_cancle" onclick="closeLayer('layer_yes');">取消</a>
+		            <a class="btn_submit" onclick="closeWin();">确定</a>
+		            <div class="clear"></div>
+		        </p>
+		    </div>
+		</div>
+		<!-- 提示弹层 -->
+        <div class="layer_yN" id="layer_no">
+			<div class="block_layer">
+		    </div>
+		    <div class="tipYsNo">
+		    	<p class="tip_title">亲：）设计师忙，请稍后再联系</p>
+		        <p class="btn_y_n">
+		        	<a class="btn_submit btn_cancle" onclick="closeLayer('layer_no')">取消</a>
+		            <a class="btn_submit" onclick="closeLayer('layer_no');">确定</a>
+		            <div class="clear"></div>
+		        </p>
+		    </div>
+		</div>
+</body>
+</html>
+

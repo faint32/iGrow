@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.WchatOctMenuDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="WchatOctMenuRM" type="TwchatOctMenuInfo">
+		<id property="id" column="id" />
+		<result property="name" column="name"/>
+		<result property="event" column="event"
+				typeHandler="EnumOrdinalTypeHandler" javaType="Ewevent"/>
+		<result property="isDelete" column="is_delete"
+				typeHandler="EnumOrdinalTypeHandler" javaType="Ebool"/>
+		<result property="key" column="event_key"/>
+		<result property="srcUrl" column="src_url"/>
+		<result property="srcData" column="src_data"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="sort" column="sort"/>
+		<result property="createDate" column="create_date"/>
+		<result property="modifyDate" column="modify_date"/>
+		<result property="createOperator" column="create_operator"/>
+		<result property="modifyOperator" column="modify_operator"/>		
+		<collection property="subMenus" javaType="ArrayList" column="id" ofType="TwchatOctMenuInfo" 
+			select="com.igrow.mall.dao.mybatis.intf.WchatOctMenuDao.findSubMenus"/>
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="WchatOctMenuRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_oct_menu_info WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="TwchatOctMenuInfo"  keyProperty="id" useGeneratedKeys="true" flushCache="false">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_wchat_oct_menu_info 
+				(name,is_delete,
+				parent_id,sort,
+				create_date,modify_date,create_operator,modify_operator)
+					values
+				(#{name},#{isDelete,javaType=Ebool,typeHandler=EnumOrdinalTypeHandler},
+				#{parentId},#{sort},
+				#{createDate},#{modifyDate},#{createOperator},#{modifyOperator})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="TwchatOctMenuInfo" flushCache="false">
+		<![CDATA[
+			update t_wchat_oct_menu_info 
+				  set
+						name = #{name},
+						event = #{event,javaType=Ewevent,typeHandler=EnumOrdinalTypeHandler},
+						event_key = #{key},
+						src_data = #{srcData},
+						src_url = #{srcUrl},
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="TwchatOctMenuInfo" flushCache="false">
+		<![CDATA[
+			update t_wchat_oct_menu_info 
+				  set
+						is_delete = 1,
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="false">
+		<![CDATA[
+			SELECT count("id") FROM t_wchat_oct_menu_info WHERE is_delete = 0;
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="WchatOctMenuRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_oct_menu_info WHERE is_delete = 0;
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="WchatOctMenuRM" useCache="false">
+			SELECT * FROM t_wchat_oct_menu_info  where 1 = 1  
+				 <if test="orderBy != null and order != null">
+				 	ORDER BY ${orderBy} ${order}
+				 </if>
+				 <if test="firstIndex != null and pageSize != null">
+				 	LIMIT #{firstIndex} ,#{pageSize}
+				 </if>
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="false">
+			SELECT count(`id`) FROM t_wchat_oct_menu_info where 1 = 1  
+			
+	</select>
+		
+	<!--9.查询主菜单列表 -->
+	<select id="findMainMenus" resultMap="WchatOctMenuRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_oct_menu_info where 1=1 and parent_id is null and is_delete = 0 order by sort desc, id asc;
+		]]>
+	</select>
+	
+	<!--9.查询主菜单子菜单列表 -->
+	<select id="findSubMenus" parameterType="int" resultMap="WchatOctMenuRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_oct_menu_info where 1=1 and parent_id = #{id} and is_delete = 0 order by sort desc, id asc;
+		]]>
+	</select>
+	
+	<!--1.查询  -->
+	<select id="findByKey" parameterType="String" resultMap="WchatOctMenuRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_oct_menu_info WHERE event_key = #{key}  LIMIT 0 ,1
+		]]>
+	</select>
+	
+	
+</mapper>

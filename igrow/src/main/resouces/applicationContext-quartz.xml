@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- 定时订单取消任务 -->
+	<bean id="timingOrderCancelJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+		p:targetObject-ref="jobServiceImpl" p:targetMethod="timingOrderCancelProcess" p:concurrent="false" />
+		
+	<!-- 定时订单确认收货任务 -->
+	<bean id="timingOrderReceiptJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+		p:targetObject-ref="jobServiceImpl" p:targetMethod="timingOrderConfirmReceiptProcess" p:concurrent="false" />
+		
+	<!-- 定时进行账单生成任务 -->
+	<bean id="timingOrderStatementProcessJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+		p:targetObject-ref="jobServiceImpl" p:targetMethod="timingOrderStatementProcess" p:concurrent="false" />
+		
+	<!-- 定时进行酒店统计数据生成任务 -->
+	<bean id="timinghotelCountJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+		p:targetObject-ref="jobServiceImpl" p:targetMethod="timinghotelCountProcess" p:concurrent="false" />
+		
+	<!-- 定时进行日总会员数统计生成任务 -->
+	<bean id="timingTotalMemberCountJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+		p:targetObject-ref="memberJobServiceImpl" p:targetMethod="timingTotalMemberReportProcess" p:concurrent="false" />
+	
+	
+	
+	<!-- 定时订单取消Trigger-->
+	<bean id="orderCancelTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"
+		p:jobDetail-ref="timingOrderCancelJobDetail" p:startDelay="10000" p:repeatInterval="1200000">
+	</bean>
+	
+	<!-- 定时确认收货Trigger-->
+	<bean id="orderReceiptTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"
+		p:jobDetail-ref="timingOrderReceiptJobDetail" p:startDelay="10000" p:repeatInterval="7200000">
+	</bean>
+	
+	<!-- 定时进行账单生成Trigger-->
+	<bean id="orderStatementTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"
+		p:jobDetail-ref="timingOrderStatementProcessJobDetail" p:startDelay="10000" p:repeatInterval="36000000">
+	</bean>
+	
+	<!-- 定时进行总会员数Trigger-->
+	<bean id="totalMemberCountTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="timingTotalMemberCountJobDetail" />
+		<property name="cronExpression" value=" 0 10 0 * * ? *" /> <!-- 0 10 0 * * ? * -->
+	</bean>
+	
+	
+	
+	
+	<!-- 定时酒店统计数据生成Trigger-->
+<!-- 	<bean id="hotelCountTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"
+		p:jobDetail-ref="timinghotelCountJobDetail" p:startDelay="10000" p:repeatInterval="36000000">
+	</bean> -->
+ <!--    <bean id="hotelCountTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+		<ref bean="timinghotelCountJobDetail" />
+		</property>
+		<property name="cronExpression">
+		<value>0 01 0 ? * *</value>
+		</property>
+	</bean>   -->
+
+	
+	<!-- 任务调度-->
+	<bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!-- <ref bean="orderCancelTrigger" />
+				<ref bean="orderReceiptTrigger" />
+				<ref bean="sequenceCronTrigger" />
+				<!--<ref bean="orderStatementTrigger" />-->
+				<ref bean="totalMemberCountTrigger" />
+				<!--酒店统计-->
+				<ref bean="hotelCountTrigger" /> -->
+				
+			</list>
+		</property>
+		<property name="schedulerContextAsMap">
+			<map>
+				<entry key="timeout" value="30" />
+			</map>
+		</property>
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.threadPool.class">
+					org.quartz.simpl.SimpleThreadPool
+				</prop>
+				<prop key="org.quartz.threadPool.threadCount">10</prop>
+			</props>
+		</property>
+		<!-- <property name="taskExecutor" ref="taskExecutor" /> -->
+	</bean>
+	
+	<bean id="sequence" class="com.igrow.mall.bean.sequence.SequenceFactoryBean" />
+ 
+	<bean id="job" class="com.igrow.mall.bean.sequence.SequenceResetJob" />
+	 
+	<bean id="jobDetail"
+	    class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	    <property name="targetObject" ref="job" />
+	    <property name="targetMethod" value="execute" />
+	</bean>
+	 
+	<bean id="sequenceCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	    <property name="jobDetail" ref="jobDetail" />
+	    <property name="cronExpression" value="0 0 0 * * ?" />
+	</bean>
+	
+</beans>

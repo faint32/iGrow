@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>1克拉-合作申请</title>
+<link href="/borMall/css/front/masterpage_n.css" rel="stylesheet" type="text/css" />
+<link href="/borMall/css/front/registration_n.css" rel="stylesheet" type="text/css" />
+<link href="/borMall/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<script type="text/javascript" src="/borMall/js/front/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/borMall/js/front/js_select.js"></script>
+<script type="text/javascript">
+ function application(type){
+	 var para;
+	 if(type==1){
+		 var companyName = $("#hotelName").val();
+		 if(companyName == ""){
+			 $("#hotelName").addClass("red_wrong");
+			 return;
+		 }else{
+			 $("#hotelName").removeClass("red_wrong");
+		 }
+		 var userName = $("#userName1").val();
+		 if(userName == ""){
+			 $("#userName1").addClass("red_wrong");
+			 return;
+		 }else{
+			 $("#userName1").removeClass("red_wrong");
+		 }
+		 var duty = $("#duty1").val();
+		 if(duty == ""){
+			 $("#duty1").addClass("red_wrong");
+			 return;
+		 }else{
+			 $("#duty1").removeClass("red_wrong");
+		 }
+		 var mobile = $("#mobile1").val();
+		 if(mobile == ""){
+			 $("#mobile1").addClass("red_wrong");
+			 return;
+		 }else{
+			 if(!mobileVerf(mobile,type)){
+       			 return;
+       		 }else{
+			     $("#mobile1").removeClass("red_wrong");
+       		 }
+		 }
+		 var email = $("#email1").val();
+		 if(email == ""){
+			 $("#email1").addClass("red_wrong");
+			 return;
+		 }else{
+			 if(!emailVerf(email,type)){
+       			 return;
+       		 }else{
+			     $("#email1").removeClass("red_wrong");
+       		 }
+		 }
+		 var remark = $("#remark1").val();
+		 para = {
+				 "form.type" : 1,
+				 "form.companyName" : companyName,
+				 "form.userName" : userName,
+				 "form.duty" : duty,
+				 "form.mobile" : mobile,
+				 "form.email" : email,
+				 "form.remark" : remark
+	     };
+	 }else{
+		 var companyName = $("#companyName").val();
+		 if(companyName == ""){
+			 $("#companyName").addClass("red_wrong");
+			 return;
+		 }else{
+			 $("#companyName").removeClass("red_wrong");
+		 }
+		 var userName = $("#userName2").val();
+		 if(userName == ""){
+			 $("#userName2").addClass("red_wrong");
+			 return;
+		 }else{
+			 $("#userName2").removeClass("red_wrong");
+		 }
+		 var duty = $("#duty2").val();
+		 if(duty == ""){
+			 $("#duty2").addClass("red_wrong");
+			 return;
+		 }else{
+			 $("#duty2").removeClass("red_wrong");
+		 }
+		 var mobile = $("#mobile2").val();
+		 if(mobile == ""){
+			 $("#mobile2").addClass("red_wrong");
+			 return;
+		 }else{
+			 if(!mobileVerf(mobile,type)){
+       			 return;
+       		 }else{
+			     $("#mobile2").removeClass("red_wrong");
+       		 }
+		 }
+		 var email = $("#email2").val();
+		 if(email == ""){
+			 $("#email2").addClass("red_wrong");
+			 return;
+		 }else{
+			 if(!emailVerf(email,type)){
+       			 return;
+       		 }else{
+			     $("#email2").removeClass("red_wrong");
+       		 }
+		 }
+		 var remark = $("#remark2").val();
+		 para = {
+				 "form.type" : 2,
+				 "form.companyName": companyName,
+				 "form.userName" : userName,
+				 "form.duty" : duty,
+				 "form.mobile" : mobile,
+				 "form.email" : email,
+				 "form.remark" : remark
+	     };
+	 }
+	 $.ajax({
+         type: "post",
+         url: "/borMall/admin/application/save.do",
+         data: para,
+         dataType: "json",
+         success: function (data) {
+             if(data.status=="y"){
+            	 $(".layer_s").show();
+            		//动态显示当前时间
+            		setInterval("showTime()",1000); 
+             }
+         },
+         error: function (msg) {
+             alert(msg);
+         }
+     }); 
+ }
+ var showTimes = 3;
+ function showTime(){ 
+	 showTimes = showTimes -1;
+	 $("#showtime").html(showTimes);
+	 if(showTimes <= 0){
+		 window.location.href="/borMall/views/front/index.html";
+	 }
+ } 
+
+ function mobileVerf(mobile,type){
+		var myrez = /^(1(([385][0-9])|(47)|[8][0126789]))\d{8}$/;
+		var rez = /^(1(([385][0-9])|(47)|[8][0123456789]))\d{8}$/;
+		if(rez.test(mobile)){
+			return true;			
+		}
+		if(type == 1){
+			 $("#mobile1").addClass("red_wrong");
+		}else{
+			 $("#mobile2").addClass("red_wrong");
+		}
+		return false;
+ }
+ function emailVerf(email,type){
+	    var myrez = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+		if(myrez.test(email)){
+			return true;			
+		}
+		if(type == 1){
+			 $("#email1").addClass("red_wrong");
+		}else{
+			 $("#email2").addClass("red_wrong");
+		}
+		return false;
+ }
+ 
+ function CherkFormqRemark(obj){
+	   var asd =$(obj).val();
+	   if (asd.length > 500){  
+	    $(obj).val(asd.substring(0,500));
+	   }
+	}
+</script>
+</head>
+
+<body>
+<div id="Header">
+	<div class="header">
+		<div class="logo">
+        	<img src="/borMall/css/front/images/logo.png" width="81" height="40" />
+        </div>
+	    <div class="nav">
+	    	<ul>
+	        	<li><a href="/borMall/views/front/index.html">首   页</a></li>
+	            <li><a href="/borMall/views/front/experience.html">体验产品</a></li>
+	            <li class="curror"><a href="/borMall/views/front/application.html"  class="currseThis">合作申请</a></li>
+	        </ul>
+	        <a href="/borMall/admin/welcome/index.do" class="m_account_login">管理账户登录</a>
+	    </div>
+	</div>
+</div>
+<div id="Contenter">
+	<div class="img_area"><img src="/borMall/css/front/images/register_bg.png" /></div>
+	<div class="cloud01"><img src="/borMall/css/front/images/cloud_three.png" width="418" height="303" /></div>
+    <div class="cloud02"><img src="/borMall/css/front/images/cloud_three02.png" width="386" height="345" /></div>
+	<div class="registration_box">
+		<div class="tab_nav" id="tab">
+	        <ul id="tabwarp" class="tabwarp">
+	            <li class="selectTag"><a onclick="selectTag(0)">我是酒店</a><img src="/borMall/css/front/images/gray_icon.png" width="26" height="10" class="ge_r0"></li>
+	            <li><a onclick="selectTag(1)">我是供应商</a><img src="/borMall/css/front/images/gray_icon.png" width="26" height="10" class="ge_r0"></li>
+	            <div class="clear"></div>
+	        </ul>
+		</div>
+	    <div class="content_table_in">
+	    	<div id="tagContent0" class="tagContent selectTag" name="1">
+	        	<ul>
+	            	<li><label>酒店名称</label><input type="text" class="input_text" id="hotelName" maxlength="30"/></li>
+	                <li><label>联系人</label><input type="text" class="input_text" id="userName1" maxlength="15"/></li>
+	                <li><label>职务</label><input type="text" class="input_text" id="duty1" maxlength="30"/></li>
+	                <li><label>手机</label><input type="text" class="input_text" id="mobile1" maxlength="11"/></li>
+	                <li><label>邮箱</label><input type="text" class="input_text" id="email1" maxlength="50"/></li>
+	                <li><label>留言</label><textarea class="textarea_text" id="remark1" maxlength="100" onblur="CherkFormqRemark(this)" onkeyup="CherkFormqRemark(this)"></textarea></li>
+	                <li class="btn_submit_line"><label></label><a class="btn_submit" onclick="application(1)"/>提交</a></li></li>
+	            </ul>
+	        </div>
+	        <div id="tagContent1" class="tagContent" name="2">
+	        	<ul>
+	            	<li><label>公司名称</label><input type="text" class="input_text" id="companyName" maxlength="30"/></li>
+	                <li><label>联系人</label><input type="text" class="input_text" id="userName2" maxlength="15"/></li>
+	                <li><label>职务</label><input type="text" class="input_text" id="duty2" maxlength="30"/></li>
+	                <li><label>手机</label><input type="text" class="input_text" id="mobile2" maxlength="30" /></li>
+	                <li><label>邮箱</label><input type="text" class="input_text" id="email2" maxlength="50"/></li>
+	                <li><label>留言</label><textarea class="textarea_text" id="remark2" maxlength="100" onblur="CherkFormqRemark(this)" onkeyup="CherkFormqRemark(this)"></textarea></li>
+	                <li class="btn_submit_line"><label></label><a class="btn_submit" onclick="application(2)"/>提交</a></li></li>
+	            </ul>
+	        </div>
+	    </div>
+	</div>
+</div>
+<div class="layer_s">
+	<div class="black_layer"></div>
+	<div class="tip_layer">
+		<div class="tip_in">
+	    	<p class="tip_font"><img src="/borMall/css/front/images/Tip_icon.png" width="32" height="32" />提交成功</p>
+	        <p class="toHome"><span id="showtime">3</span>秒后返回首页</p>
+	        <a class="return_home" href="/borMall/views/front/index.html">返回首页</a>
+	    </div>
+	</div>
+</div>
+<Footer id="Footer">
+   	<div class="meun">
+       	<h3 class="contactUs_title">联系我们</h3>
+           <ul class="meun_list">
+           	<li class="width280"><span class="menu_title width70">酒店合作</span>borabora@atbora.com</li>
+               <li class="width294"><span class="menu_title">公司地址</span>西湖区古墩路673号瑞博国际B-1101</li>
+               <li class="width280"><span class="menu_title">供应商合作</span>lijian@atbora.com</li>
+               <li class="width294"><span class="menu_title">联系电话</span>0571-89714842</li>
+           </ul>
+           <span class="micro_channel"><img src="/borMall/css/front/images/images15.png" width="170" height="80" /></span>
+       </div>
+       <div class="copyright"><span class="copyright_main">Copyright©2011-2013　杭州波拉波拉网络科技有限公司　　<i class="color999">浙ICP备12034659号-2</i></span></div>
+</Footer>
+</body>
+</html>

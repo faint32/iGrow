@@ -1,0 +1,67 @@
+.empty15{ position:static}
+.relativeDiv{ position:relative}
+.tabCont{ width:220px; float:left; padding-top:9px;}
+.tabCont li{ width:191px; padding-left:29px; float:left; height:40px; line-height:40px; position:relative;}
+.tabCont li a{ color:#666; float:left}
+.tabCont li a:hover{ color:#0088cc;}
+.tabCont li.selectTag_nav{ font-weight:bold; border-right:none; background-color:#f5f5f5; height:40px; line-height:40px;}
+.tabCont li.selectTag_nav a{ color:#0088cc;}
+.selectTag .ge_r0, .selectTag_nav .ge_r{ display:block;}
+.ge_r{ position:absolute; right:-1px; top:0; width:1px; height:48px; float:left; display:none; background-color:#fff;}
+img.ge_r0{ width:18px; height:11px; left:50%; margin-left:-9px; bottom:-11px; position:absolute; display:none}
+/* right */
+.tagContent{ display:none;}
+.selectTag{ display:block;}
+.content-table{ float:left; width:1088px; padding:9px 0 18px 40px; background-color:#fff;}
+.tab_r{ float:left; width:100%; height:46px; position:relative}
+.tab_r li{ width:180px; height:46px; border-radius:3px; line-height:46px; float:left; margin-right:17px; text-align:center; font-weight:bold; color:#fff; position:relative}
+.tab_r li a{ border-radius:3px; display:block;}
+.green_bg{ background-color:#68bc31;}
+.yellow_bg{ background-color:#ffbe56;}
+.blur_bg{ background-color:#239cdc;}
+.content_table_in{ padding-top:30px; float:left}
+.box_r_statisty{ width:1086px; border:1px solid #ccc; margin-bottom:22px; border-radius:3px;}
+.box_table_s{ padding:25px 14px;}
+.box_r_statisty h2{ font-size:14px; background-color:#f8f8f8; border-bottom:1px solid #ccc; height:45px; color:#1e5494; line-height:45px; padding:0 14px;}
+.bg_Sort{ background:url(images/j3.png) no-repeat center center; cursor:pointer; height:16px; margin-left:4px; position:relative; width:35px; display:table-cell}
+.h_r{ background-image:url(images/j1.png);}
+.r_h{ background-image:url(images/j2.png);}
+.sort_li{ position:absolute; top:17px; right:0; width:115px; display:none}
+.sort_two_cont{  height:68px; width:113px; border:1px solid #999; margin-top:11px; background-color:#fff; z-index:3;}
+.sort_two_cont li{ height:34px; line-height:34px; width:100%; text-align:center; font-weight:lighter}
+
+.no_border_box{ border:none;}
+.total_sales{ color:#999; font-size:12px; padding-bottom:10px;}
+.total_sales b{ color:#333; padding-right:15px; font-size:14px}
+
+
+/* table top */
+.show_detail_report{ padding:5px 14px 10px;}
+.box_table_s td{ border:1px solid #ccc;}
+.brief_report{ padding:10px 16px 10px 20px; height:70px; font-size:14px; color:#333;}
+.b_repost_money{ font-size:20px; color:#68bc31; padding:6px 0 7px;}
+.left_or_index{ float:left; font-size:12px;}
+.right_number{ float:right; font-family:Arial, Helvetica, sans-serif;}
+.box_table_s td.hover_brief, .box_table_s td.current_brief{ background-color:#68bc31; border:1px solid #68bc31; color:#fff;}
+.brief_report{ position:relative;}
+.hover_brief .b_repost_money, .hover_brief .brief_report, .current_brief .b_repost_money, .current_brief .brief_report{ color:#fff; cursor:pointer}
+.hover_brief .up_icon, .current_brief .up_icon{ background-image:url(images/green_up_icon.png);}
+.up_icon, .down_icon{ background:url(images/green_up_icon.png) no-repeat right center; padding-right:20px;}
+.down_icon{ background-image:url(images/red_down_icon.png);}
+.current_brief .down_icon{ background-image:url(images/write_up_icon.png)}
+.green_down_icon{ display:none; position:absolute; left:50%; bottom:-11px; background:url(images/green_down.png) no-repeat 0 0; width:18px; height:11px; margin-left:-9px;}
+.hover_brief .green_down_icon, .current_brief .green_down_icon{ display:block;}
+
+
+/* new add */
+.order_by{ margin-top:22px; clear:both}
+th label{ float:none;vertical-align:middle; display:table-cell}
+.box_r_statisty .pageColm{ padding:7px 0 31px}
+.pageColm .yes_btn{ float:left;}
+.top_pageColm_add313{ height:30px; width:1053px; background-color:#f8f8f8; padding:7px 17px; float:left; border-radius:3px; border:1px solid #e5e5e5; margin-bottom:24px;}
+/*#searchForm label{ padding:0 9px;}*/
+
+.no_date{
+	background:url(images/noData.png) no-repeat center center;
+	
+}

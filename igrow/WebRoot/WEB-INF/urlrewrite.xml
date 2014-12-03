@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.0//EN" "http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
+<urlrewrite>
+	
+	<rule>
+		<note>支付宝app支付通知</note>
+		<from>^/app_alipay_pay_notify/(\w+).htm</from>
+		<to type="forward">/payment/notify/alipay/app_$1.ac</to>
+	</rule>
+	
+	<rule>
+			<note>支付宝wap支付通知</note>
+			<from>^/wap_alipay_pay_notify/(\w+).htm</from>
+			<to type="forward">/payment/notify/alipay/wap_$1.ac</to>
+	</rule>
+	
+	<rule>
+			<note>结算支付通知</note>
+			<from>^/settle_alipay_pay_notify/(\w+).htm</from>
+			<to type="forward">/payment/notify/alipay/settle_$1.ac</to>
+	</rule>
+	
+	<rule>
+			<note>地址重定向跳转</note>
+			<from>^/r_u/(\w+).htm</from>
+			<to type="forward">/redirect/url/to_$1.ac</to>
+	</rule>
+	
+	<rule>
+		<note>微信app支付通知</note>
+		<from>^/app_wxpay_pay_notify/(\w+).htm</from>
+		<to type="forward">/payment/notify/wxpay/app_$1.ac</to>
+	</rule>
+	
+	<rule>
+		<note>微信wap支付通知</note>
+		<from>^/wap_wxpay_pay_notify/(\w+).htm</from>
+		<to type="forward">/payment/notify/wxpay/wap_$1.ac</to>
+	</rule>
+	
+	<rule>
+		<note>快钱刷卡订单查询（OQS）</note>
+		<from>^/card_99bill_order_query/oqs.htm</from>
+		<to type="forward">/payment/billpay/query/oqs.ac</to>
+	</rule>
+	
+	<rule>
+		<note>快钱刷卡支付通知(mnp)</note>
+		<from>^/card_99bill_pay_notify/mnp.htm</from>
+		<to type="forward">/payment/billpay/notify/mnp.ac</to>
+	</rule>
+	
+	<rule>
+		<note>微信支付告警</note>
+		<from>^/wechat/notice</from>
+		<to type="forward">/payment/notify/wechat/notice.ac</to>
+	</rule>
+	
+	<rule>
+		<note>微信支付维权</note>
+		<from>^/wechat/rights</from>
+		<to type="forward">/payment/notify/wechat/rights.ac</to>
+	</rule>
+	
+</urlrewrite>

@@ -1,0 +1,11 @@
+.searchBox{ display: inline-block;white-space: nowrap;word-wrap: normal;overflow: hidden;-ms-text-overflow: ellipsis;-o-text-overflow: ellipsis;-webkit-text-overflow: ellipsis;text-overflow: ellipsis;}
+.oManag_Number{ width:127px;}
+.oManag_Nam{ width:156px;}
+.amount_price{color:#666}
+.amount_price td{ padding:0 13px;}
+.receipt_way{ margin-bottom:5px;color:#666}
+.receipt_way_title{ padding:9px 0 5px; color:#666}
+.order-status-btn{ padding-top:16px;}
+.order-status-btn_top{ padding-top:0}
+.express-orders{ width:200px; padding:4px; height:20px; line-height:20px; border:1px solid #ccc;}
+.n_orderTabVal{ padding:8px 0}

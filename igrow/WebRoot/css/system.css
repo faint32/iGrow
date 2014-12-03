@@ -1,0 +1,6 @@
+.delivery{ display:none; padding-top:29px; padding-top:29px;}
+.confirmDiv{ padding-top:27px; text-align:left}
+.confirmDiv .confirm-delivery{ margin-left:0;}
+.unprocessed-orders-block{ display:none;}
+.unprocessed-orders-block .orderBlock{ border-top:none; padding-top:20px; margin-top:0;}
+

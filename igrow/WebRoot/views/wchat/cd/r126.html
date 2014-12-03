@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-control" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width; maximum-scale=1.0;  user-scalable=no; initial-scale=1.0" />
+    <title>页面跳转</title>
+    <link rel="stylesheet" type="text/css" href="/borMall/css/wchat/cardDetail.css">
+    <script type="text/javascript" src="/borMall/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+    
+      var serurl = "http://www.1ct.cc";
+      var cardid = "pVE3-su9aUbmFovKjXOCSleJpqLE";
+      var signature = "cd870352ce4af75abe16ddd0cb1a0820855965f4";
+      var timestamp = "1414409797";
+      
+      var ua = navigator.userAgent,
+      	is_ios = /(iPhone|iPad|iPod|iOS)/i.test(ua),
+      	is_android = /(Android)/i.test(ua); 
+    	//获取微信版本号：例如5.2.1
+      function get(){
+       var reg = /MicroMessenger\/([\d\.]+)/i,
+       	ret = ua.match(reg);
+       if (ret && ret[1]){
+       	return ret[1];
+       }
+      	return false;
+      }
+   	  //定义版本号
+    //var banben = get();
+  	//WeixinJSBridge是否加载完成
+    if(typeof WeixinJSBridge == "undefined") {
+  		if(get()>='5.5'){
+  			document.addEventListener('WeixinJSBridgeReady', onBridgeReady);
+  		}else{
+  			document.addEventListener('WeixinJSBridgeReady', onBridgeReadyold);
+  		}
+  	 }else{
+  		if(get()>='5.5'){
+  			onBridgeReady();
+  		}else{
+  			onBridgeReadyold();
+  		}
+     }
+
+   	 function onBridgeReadyold() {
+   		 $(function(){   
+   			WeixinJSBridge.invoke('openCardDetail', {
+   			"card_id": cardid,
+   			"card_ext": "{\"code\":\"\",\"openid\":\"\",\"timestamp\":\""+timestamp+"\",\"signature\":\""+signature+"\"}"
+   			},
+	   		function(res) {
+   				if(res.err_msg == 'batch_add_card:ok') {
+   					//alert('成功')
+	    		}else if(res.err_msg == 'batch_add_card:fail'){
+	    			//alert('失败')
+	    		}else if(res.err_msg == 'batch_add_card:cancel'){
+	    			//alert('取消')
+	    		}else{
+	    			//alert('未知');
+	    		}
+   				WeixinJSBridge.invoke('closeWindow',{
+		        	},function(res){
+		 
+		    	});
+	   		}); 
+   		});
+   	 }
+   	 
+   	 function onBridgeReady() {
+   	  $(function(){   
+   			WeixinJSBridge.invoke('batchAddCard', {
+   				"card_list": [
+				{
+				"card_id": cardid,
+				"card_ext":
+				"{\"code\":\"\",\"openid\":\"\",\"timestamp\":\""+timestamp+"\",\"signature\":\""+signature+"\"}"
+				}]
+   			},
+	   		function(res) {
+   				if(res.err_msg == 'batch_add_card:ok') {
+   					//alert('成功')
+	    		}else if(res.err_msg == 'batch_add_card:fail'){
+	    			//alert('失败')
+	    		}else if(res.err_msg == 'batch_add_card:cancel'){
+	    			//alert('取消')
+	    		}else{
+	    			//alert('未知');
+	    		}
+   				WeixinJSBridge.invoke('closeWindow',{
+		        	},function(res){
+		 
+		    	});
+	   		});
+   		});
+   	}
+   	 
+    </script>
+</head>
+	<ul class="cardCoupons" style="text-align:center; font-size:16px; padding-top:25px;">
+    	<li><p>页面跳转中，请稍后</p></li>
+    </ul>
+</div>
+</html>
+

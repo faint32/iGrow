@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.LogDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="LogRM" type="TlogDetail">
+		<id property="id" column="id" />
+		<result property="operation" column="operation"/>
+		<result property="operator" column="operator"/>
+		<result property="actionClass" column="action_class"/>
+		<result property="actionMethod" column="action_method"/>
+		<result property="ip" column="ip"/>
+		<result property="info" column="info"/>
+		<result property="systemType" column="system_type"
+				typeHandler="EnumOrdinalTypeHandler" javaType="EsystemType"/>
+		<result property="createDate" column="create_date"/>
+		<result property="modifyDate" column="modify_date"/>
+		<result property="createOperator" column="create_operator"/>
+		<result property="modifyOperator" column="modify_operator"/>		
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="LogRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_log_detail WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="TlogDetail"  keyProperty="id" useGeneratedKeys="true" flushCache="true">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_log_detail 
+				(system_type,operation,operator,action_class,action_method,ip,info,create_date,modify_date,create_operator,modify_operator)
+					values
+				(#{systemType,javaType=EsystemType,typeHandler=EnumOrdinalTypeHandler},
+				#{operation},#{operator},#{actionClass},#{actionMethod},#{ip},#{info},
+				#{createDate},#{modifyDate},#{createOperator},#{modifyOperator})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="TlogDetail" flushCache="true">
+		<![CDATA[
+			update t_log_detail 
+				  set
+						operation = #{operation},
+						operator = #{operator},
+						action_class = #{actionClass},
+						action_method = #{actionMethod},
+						ip = #{ip},
+						info = #{info},
+						info = #{systemType,javaType=EsystemType,typeHandler=EnumOrdinalTypeHandler},
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="TlogDetail" flushCache="true">
+		<![CDATA[
+			delete from t_log_detail
+				   where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="true">
+		<![CDATA[
+			SELECT count("id") FROM t_log_detail
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="LogRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_log_detail
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="LogRM" useCache="true">
+			SELECT * FROM t_log_detail  
+				
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="true">
+		<![CDATA[
+			SELECT count(`id`) FROM t_log_detail
+		]]>
+	</select>
+	
+	
+</mapper>

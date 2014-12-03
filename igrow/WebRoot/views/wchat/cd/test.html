@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-control" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width; maximum-scale=1.0;  user-scalable=no; initial-scale=1.0" />
+    <title>卡券详情</title>
+    <link rel="stylesheet" type="text/css" href="/borMall/css/wchat/cardDetail.css">
+    <script type="text/javascript" src="/borMall/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+        var serurl = "http://www.1ct.cc";
+        
+		var appId = "wx8a865f88c23ec791",
+   		 	locationId = 271720134,
+   			signType = "SHA1",
+   			cardSign = "ec9283907a232d2f48e5aef44b86d2986bc54de7",
+   			cardId = "",
+   			cardType = "",
+   			timeStamp = 1414226841,
+   			nonceStr= "123123";
+        
+		   function WeiXinAddContact(cb){ 
+			   alert(111);
+		    	if (typeof WeixinJSBridge == 'undefined')  return false;  
+		    	WeixinJSBridge.invoke('addContact', { webtype: '1', username: 'gh_a706b2ebc29a'  },  
+		    	function(d) {   
+		   			//WeixinJSBridge.log(d.err_msg);  cb && cb(d.err_msg); 
+		   		});
+		    }; 
+   	
+        
+    </script>
+</head>
+<div class="content" id="pincontainer">
+	<ul class="cardCoupons">
+    	<!--  <li><a  onclick="WeiXinAddContact('1')" >一键关注</a></li>-->
+    	<li><a   href="weixin://profile/gh_a706b2ebc29a">一键关注</a> </li>
+        <div class="clear"></div>
+    </ul>
+</div>
+</html>
+

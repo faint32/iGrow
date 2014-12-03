@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.MessageTemplateDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="MessageTemplateRM" type="TmessageTemplate">
+		<id property="id" column="id" />
+		<result property="content" column="content"/>
+		<result property="title" column="title"/>
+		<result property="code" column="code"/>
+		<result property="passage" column="passage"/>
+		<result property="createDate" column="create_date"/>
+		<result property="modifyDate" column="modify_date"/>
+		<result property="createOperator" column="create_operator"/>
+		<result property="modifyOperator" column="modify_operator"/>		
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="MessageTemplateRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_message_template WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="TmessageTemplate"  keyProperty="id" useGeneratedKeys="true" flushCache="true">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_message_template 
+				(content,title,code,passage,create_date,modify_date,create_operator,modify_operator)
+					values
+				(#{content},#{title},#{code},#{passage},
+				#{createDate},#{modifyDate},#{createOperator},#{modifyOperator})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="TmessageTemplate" flushCache="true">
+		<![CDATA[
+			update t_message_template 
+				  set
+						content = #{content},
+						title = #{title},
+						code = #{code},
+						passage = #{passage},
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="TmessageTemplate" flushCache="true">
+		<![CDATA[
+			delete from t_message_template
+				   where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="true">
+		<![CDATA[
+			SELECT count("id") FROM t_message_template
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="MessageTemplateRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_message_template
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="MessageTemplateRM" useCache="true">
+			SELECT * FROM t_message_template  
+				
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="true">
+		<![CDATA[
+			SELECT count(`id`) FROM t_message_template
+		]]>
+	</select>
+	
+	<!--9.依据code查询对象  -->
+	<select id="findByCode" parameterType="String" resultMap="MessageTemplateRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_message_template WHERE code = #{code} 
+				LIMIT 0 ,1
+		]]>
+	</select>
+	
+	
+</mapper>

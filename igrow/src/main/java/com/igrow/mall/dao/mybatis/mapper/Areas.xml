@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.AreaDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="AreasRM" type="Tareas">
+		<id property="id" column="id" />
+		<result property="areaSn" column="area_Sn"/>
+		<result property="citySn" column="city_Sn"/>
+		<result property="name" column="name"/>
+		<association property="city" column="city_Sn" javaType="Tcities"
+				select="com.igrow.mall.dao.mybatis.intf.CityDao.findBySn"/>
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="AreasRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_areas WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="Tareas"  keyProperty="id" useGeneratedKeys="true" flushCache="true">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_areas 
+				(area_sn,city_sn,name)
+					values
+				(#{areaSn},#{citySn},#{name})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="Tareas" flushCache="true">
+		<![CDATA[
+			update t_areas 
+				  set
+						area_sn = #{areaSn},
+						city_sn = #{citySn},
+						name = #{name},
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="Tareas" flushCache="true">
+		<![CDATA[
+			delete from t_areas
+				   where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="true">
+		<![CDATA[
+			SELECT count("id") FROM t_areas
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="AreasRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_areas
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="AreasRM" useCache="true">
+			SELECT * FROM t_areas  
+				
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="true">
+		<![CDATA[
+			SELECT count(`id`) FROM t_areas
+		]]>
+	</select>
+	
+	<!--1.查询  -->
+	<select id="findBySn" parameterType="String" resultMap="AreasRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_areas WHERE area_sn = #{areaSn}
+				LIMIT 0 ,1
+		]]>
+	</select> 
+	
+	<!--1.查询  -->
+	<select id="findListByCitySn" parameterType="String" resultMap="AreasRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_areas WHERE city_sn = #{citySn}
+		]]>
+	</select> 
+	
+	
+</mapper>

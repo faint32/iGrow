@@ -1,0 +1,261 @@
+.titleH2{ position:relative;}
+.addProducts{ position:absolute; right:0px; top:-3px;}
+.add_new_pro{ left:73px; right:inherit; top:16px; width:auto; *width:66px; padding-left:13px; text-align:center}
+.printIt{ background:url(images/print_page.png) no-repeat 0 0; border:none; padding: 0; top: 9px; width: 22px; height:22px; display:none}
+.printIt:hover{ background:url(images/print_page.png) no-repeat 0 -22px; border:none}
+.layer, .layer_code{ position:fixed; left:0; top:0; width:100%; height:100%; display:none}
+.bottomBlock{ background-color:#000; filter:alpha(opacity=30); opacity:0.3;  position:absolute; left:0; top:0; width:100%; height:100%;}
+.layer-content{ left:50%; top:50%; margin:-125px 0 0 -254px; width:502px; height:250px; position:fixed; z-index:5; background:url("images/d.png") repeat 0 0; padding:6px;}
+.two-select{ width:100%; height:100%; background-color:#ffffff;}
+.leftStyle, .rightStyle {
+    float: left;
+    text-align: center;
+    width: 188px;
+}
+.leftStyle{ padding:30px 0 0 30px;}
+.sendMessage, .toWeb {
+    background: url("images/wxSendMess.png") no-repeat 0 0;
+    cursor: pointer;
+    display: block;
+    height: 188px;
+    width: 188px;
+	line-height:188px;
+	text-align:center;
+	font-size:20px;
+	font-family:"Microsoft YaHei", arial;
+	color:#ccc;
+	position:relative;
+    
+}
+.tip_font{ color:#666; font-size:12px; font-family:Microsoft YaHei; position:absolute; left:60px; top:26px;}
+.rightStyle {
+	float:right; padding:30px 30px 0 0;
+}
+a.sendMessage:hover, a.toWeb:hover, .two-select a:hover {
+    background-position: 0 -188px;
+	color:#fe4f3e;
+}
+/*******layer02******/
+.layerBox{
+	position:fixed;
+	left:50%;
+	top:50%;
+	width:650px;
+	padding:6px;
+	background:url("images/d.png") repeat 0 0;
+	min-height:455px;
+	z-index:5;
+	margin:-277px 0 0 -331px;
+	display:none;
+}
+.content_in{
+	background-color:#fff;
+}
+.content_in h2 span{
+	padding-left:21px;
+}
+.summaryBox{
+	height:394px; overflow-y:auto;
+	overflow-x:hidden;
+	padding:0 15px;
+	
+}
+.layerBox h2 {
+    height: 60px;
+	line-height:60px;
+    position: relative;
+    width: 100%;
+	border-bottom:2px solid #e2e2e2;
+	font-size:16px;
+	color:#333;
+	font-family:Microsoft YaHei;
+	font-weight:normal;
+}
+
+.summaryBox {
+	color:#3366cc
+}
+.search-out{padding-top:31px;}
+.easy-search{ padding:5px 0 0; color:#999; font-size:16px; font-family:Arial, Helvetica, sans-serif; clear:both}
+.easy-search a{ padding-right:11px;}
+.search-out span{ background: #e8f2ff; display:block; border-bottom:none; height:30px; width:601px; line-height:30px; padding-left:19px; font-weight:lighter; font-size:16px; font-family:Arial, Helvetica, sans-serif;}
+.search-out li{ clear:both; padding:5px 0;}
+.search-out li a{ padding-left:15px; color:#3366CC}
+.search-out li a:hover{ color:#fe4f3e; text-decoration:underline;}
+.productsName-here{ padding:12px 5px 0;}
+.productsName-here li{ cursor:pointer; width:32%; display:inline-block; *display:inline; *zoom:1; line-height:30px; padding:0; vertical-align:top;white-space: nowrap; word-wrap: normal; overflow: hidden; -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis; -webkit-text-overflow: ellipsis; text-overflow: ellipsis;}
+.checkboxChange li{ display:inline-block; *display:inline; *zoom:1; vertical-align:middle; *display:inline; *zoom:1; width:auto}
+
+
+.not_approved p{ padding-left:22px;}
+.hotel_name{ width:155px;}
+.hotel_commission_rate{ padding:4px 0 4px 15px; height:20px; line-height:20px; width:127px;}
+.hotel_commission_rate:focus{ border:1px solid #239cdc;}
+.OrderTop{ position:relative; *background-color:#fff;}
+.summaryBox .OrderTop{padding-top:36px;}
+.save_b{ top:0;}
+.order_li{ width:722px; background-color:#eaf8ff; border:1px solid #d4f0fe; font-family:Microsoft YaHei; color:#666; padding:7px 18px; }
+.order_li li{ width:33%; float:left; height:22px; line-height:22px;}
+
+.why_tip{ background-color:#fff; width:350px; height:266px;}
+.tip_why_this{ width:350px;}
+.layer_textarea{ width:288px; height:106px; color:#666; border:1px solid #ccc; padding:5px 13px; font-size:12px;}
+.layer_title{ height:60px; line-height:60px;  color:#333;}
+b.layer_title{position:relative; width:100%; display:block}
+b.layer_title span{padding-left:21px;}
+.write_whyNo{width:316px; margin:0 auto}
+.font_right_tip{ text-align:right; color:#999; font-size:13px; padding:1px 0 3px;}
+.reset_pwd{ padding-left:25px; color:#3366CC}
+.have_border{ border:1px solid #ccc; border-top:none;}
+.member_detail{ background:url(images/icon01.png) no-repeat 13px center #eaf8ff; color:#666; padding:20px 0 20px 101px; height:85px; line-height:30px;}
+.products-vesting li span img{ vertical-align:text-top; padding-top:3px;}
+.price_b{ padding:0 8px 0 15px; font-size:18px; font-family:Arial, Helvetica, sans-serif;}
+.show_next_node{ position:relative; background-position:0 -22px;}
+.top_arrow_blue{ position:absolute; top:17px; right:0px; background:url(images/blue_jt.png) no-repeat 0 0; width:25px; height:14px; display:none; z-index:1000000000000000000;}
+.show_next_node .top_arrow_blue, .show_next_node .detail_member_layer{ display:block;}
+.bottom_layer_see{ position:absolute; left:0; top:0; width:100%; height:100%; display:none;}
+.no_position{ padding:0 0 0 15px; float:left;}
+.detail_member_layer{ position:absolute; top:15px; right:-50px;  width:760px;display:none; z-index:100;}
+.d_m_l_cont{ margin-top:15px;width:758px;  background-color:#fffcf3; border:1px solid #e3bd99; }
+.colorccc{ color:#ccc;}
+.member_detail i{ padding:0 10px;}
+
+
+/* new add */
+h3.layer_title{
+		border-bottom:2px solid #e5e5e5;
+		color:#333;
+		display:block;
+		margin-bottom:20px;
+		white-space: nowrap; 
+		word-wrap: normal;
+		overflow: hidden; 
+		-ms-text-overflow: ellipsis; 
+		-o-text-overflow: ellipsis; 
+		-webkit-text-overflow: ellipsis; 
+		text-overflow: ellipsis;
+		font-family:Microsoft YaHei;
+		font-weight:normal;
+		padding-left:21px;
+		position:relative;
+	}
+	.two_di_l{
+		width:186px;
+		height:186px;
+		margin:0 auto 30px;
+		display:block;
+	}
+	.tip_why_this{
+		height:369px;
+	}
+	.tip_why_this .why_tip{
+		height:369px;
+	}
+.write_why, .write_why .why_tip{ height:280px;}
+.paddingL13{ padding-left:13px;}
+.btn_new_bg{ position:static;}
+.new_no_border th, .new_no_border td, .new_no_border{ border:none; }
+
+
+/* add 2014-5-12 for Calculators*/
+.n_calculators_title{ font-style:normal; color:#FF8633; cursor:pointer; font-weight:bold; padding-right:10px;}
+.n_calculators_title:hover{ text-decoration:underline}
+.n_calculators_input{ margin-right:5px; display:none; width:88px; padding:4px; height:26px; line-height:26px;}
+#n_calculatorsValue{ display:none}
+
+/* add 2014-7-14 for stock manage */
+.relativeDiv {position: relative;}
+th label {float: none;vertical-align: middle;display: table-cell;}
+.bg_Sort {background: url('images/j3.png') no-repeat scroll center center transparent;cursor: pointer;height: 16px;margin-left: 4px;position: relative;width: 35px;display: table-cell;}
+.asc_sort{background-image: url('images/j1.png')}
+.desc_sort{background-image: url('images/j2.png')}
+
+/* 2014-7-21 for Barcode Management */
+.n_hotelName_summary{ border:1px solid #e8e8e8; background-color:#fff; padding: 5px 32px; font-size:16px; font-family:arial,Microsoft YaHei;}
+.pro_name_l353{ width:328px;}
+.n_hotelName{ width:250px; float:left}
+.RMB{ font-family:Microsoft YaHei;}
+.barcordUpdate{ position:relative;}
+.printBarcode{ cursor:pointer;width:86px; background-color:#f5f5f5; height:28px; border:1px solid #ccc; display:block; font-size:14px; color:#333; text-align:center; line-height:28px;}
+.printBarcode:hover{ border:1px solid #ccc; background-color:#e2e2e2;}
+.tip_update{ position:absolute; top:-10px; right:-12px; font-size:12px; color:#fff; height:17px; padding:0 9px; border-radius:10px; border:1px solid #db311a; background-color:#ea5541; line-height:16px; font-weight:normal}
+.tip_update img{ position:absolute; left:50%; bottom:-7px; width:8px; height:7px; margin-left:-4px}
+.empty28{ padding-left:28px;}
+.barcordTop{ padding-top:10px; float:left}
+
+/* 2014-7-31 for cabinet */
+.pro_name_l73{width:73px;}
+.pro_name_l110{ width:110px;}
+.cabinetSelect{ width:317px;}
+.caninetTextarea{ width:500px; font-size:12px;}
+.cabnitSwitch{ float:none; display: inline-block; padding:0; text-align:center; vertical-align: middle;}
+
+/* 2014-8-25 for member */
+.member_name_t{ font-size:22px; font-family:Microsoft YaHei; color:#3c3c3c}
+.operating .order_li{ background:none; border:none}
+.operating th{ background-color:#f5e0cd;}
+.operating .OrderTable, .operating .OrderBottom{ padding:0}
+.operating td, .operating th{ border:none; border-bottom:1px solid #f5e0cd;}
+.operating table{border:none;}
+.operating .operationIn{ padding:8px 18px;}
+
+/* 2014-8-26 for invoice */
+.bottomDottedLine{ border-bottom:1px dashed #eee;padding-bottom:0}
+.products-vesting{ font-family:Microsoft YaHei;}
+.products-vesting li span{font-size:16px;}
+.hasPassed{ padding:16px 0 0}
+#invoiceStatements{ padding-top:12px;}
+.hasPassed .cancel-btn, .btn_hasPassed{ margin-left:159px}
+.btn_hasPassed126{margin-left:126px;}
+.btn_hasPassed_O{ margin-left:173px}
+.btn_hasPassed98{margin-left:98px;}
+.toPadTop10{ padding-top:5px; display:block}
+.products-vesting li.reduceDis{padding-bottom:25px;}
+.products-vesting li.n_borderBotLine, .n_borderBotLine{height:1px;border-top:1px dashed #e6e6e6;}
+/* 2014-8-27 for proManag */
+.ratioCalculation{ background-color:#f5f5f5; border:1px solid #e8e8e8; margin-left:159px; padding:10px 40px; margin-top:15px; width:519px}
+.ratioCalculation table, .ratioCalculation td{ border:none}
+.ratioCalculation input{ width:110px; padding:4px;}
+.pageChange_n .pageinner{ padding:13px 0 15px}
+.noData{ padding-top:169px; text-align:center; color:#666; background:url(images/kong.png) no-repeat center 20px; font-size:18px; font-family:Microsoft YaHei;}
+.noTop .pageinner{ padding-top:0;}
+.noLeft .content-right{ margin-left:0; padding-left:0}
+.n_toTop{ padding-top:7px;}
+.products-vesting li span.n_seeCode{ width:auto; padding-right:10px;}
+.rightMarginTop{ margin-top:-5px;}
+.fontReturn{ font-size:16px; color:#0088cc; font-family:Microsoft YaHei;font-weight:normal; line-height:32px; background:none; width:45px; text-align:right; width:45px; padding:0}
+.fontReturn:hover, .hoverColor_n:hover, .operating .onlySeeThis:hover{color:#f15834; text-decoration:underline}
+
+/* 2014-9-1 add for hotelManager */
+i.noAdd_n{ color:#333}
+
+/* 2014-9-9 for new add print */
+.text_Align{ height:30px; line-height:30px;}
+.text_Align .printBarcode{ float:left}
+.text_Align .fontReturn{ margin-top:0}
+/* 2014-9-23 add for cabinet add new small cabi */
+.products-vesting li span.n_cabinetWidth{ float:left; width:601px;}
+.n_divBox{ clear:both; height:30px; margin-bottom:15px;}
+.n_btn_delete{ background:url(images/close.png) no-repeat 0 0; width:14px; height:14px; display:block; position:absolute; right:10px; top:12px;}
+.n_btn_delete:hover{ background-position:0 -14px;}
+.n_cabinetWidth .add_pro_btn{ float:left; font-size:14px; color:#666}
+.n_divBox .fontReturn{ width:auto; margin:0}
+.n_selectAdd .n_divBox:last-child{ margin-bottom:0;}
+.n_cabi_relative{ position:relative}
+.w_cabinet_box{overflow:hidden; position:relative; height:631px; margin:9px; width:485px;}
+.wrapper_cab{ position:absolute; left:0; top:0; }
+.layer_cabi_summary{ float:left; width:485px;}
+.btn_left_arrow{ background:url(images/page_left_arrow.png) no-repeat 0 0; width:30px; height:36px; display:block; position:absolute; left:45px; top:50%; margin-top:-18px;}
+.btn_right_arrow{ background:url(images/page_right_arrow.png) no-repeat 0 0; width:30px; height:36px; display:block; position:absolute; right:45px; top:50%; margin-top:-18px;}
+.btn_left_arrow:hover, .btn_right_arrow:hover{ background-position:0 -36px;}
+.n_none{ display:none;}
+.n_show{ display:block;}
+.n_p_text{ padding:0 0 15px 14px; border:1px solid #ccc; padding:4px 0 4px 17px; height:26px; line-height:26px; width:300px; margin:0 0 15px 14px;}
+.n_show_num{ position:absolute; z-index:10; left:0; top:52px; font-size:20px; width:60px; height:30px; border-radius:0 5px 5px 0; background-color:#F15834; color:#fff; text-align:center; line-height:30px;}
+.cab_main{ position:relative}
+/* on and off */
+.operating a.noSeeThisIcon{ background-position:0 0;}
+/* new add for cabinet add */
+.cabiNoleft .Validform_right, .cabiNoleft .Validform_wrong{ margin-left:0}
+.n_divBox .add_pro_btn{ margin-right:13px;}
+.floatLeft{ display:inline-block; *display:inline; zoom:1;}

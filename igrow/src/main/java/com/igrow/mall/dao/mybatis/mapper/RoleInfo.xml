@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.RoleDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="RoleRM" type="TroleInfo">
+		<id property="id" column="id" />
+		<result property="name" column="name"/>
+		<result property="code" column="code"/>
+		<result property="isSystem" column="is_system"
+				typeHandler="EnumOrdinalTypeHandler" javaType="Ebool"/>
+		<result property="isDelete" column="is_delete"
+				typeHandler="EnumOrdinalTypeHandler" javaType="Ebool"/>
+		<result property="status" column="status"
+				typeHandler="EnumOrdinalTypeHandler" javaType="Estatus"/>
+		<result property="createDate" column="create_date"/>
+		<result property="modifyDate" column="modify_date"/>
+		<result property="createOperator" column="create_operator"/>
+		<result property="modifyOperator" column="modify_operator"/>	
+		<collection property="purviewInfos" javaType="ArrayList" column="id" ofType="TpurviewInfo" 
+			select="com.igrow.mall.dao.mybatis.intf.PurviewDao.findListByRoleId"/>
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="RoleRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_role_info WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="TroleInfo"  keyProperty="id" useGeneratedKeys="true" flushCache="false">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_role_info 
+				(id,name,code,is_system,is_delete,status
+				create_date,modify_date,create_operator,modify_operator)
+					values
+				(#{id},#{name},#{code},
+				#{isSystem,javaType=Ebool,typeHandler=EnumOrdinalTypeHandler},
+				#{isDelete,javaType=Ebool,typeHandler=EnumOrdinalTypeHandler},
+				#{status,javaType=Estatus,typeHandler=EnumOrdinalTypeHandler},
+				#{createDate},#{modifyDate},#{createOperator},#{modifyOperator})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="TroleInfo" flushCache="false">
+		<![CDATA[
+			update t_role_info 
+				  set
+						name = #{name},
+						code = #{code},
+						is_system = #{isSystem,javaType=Ebool,typeHandler=EnumOrdinalTypeHandler},
+						is_delete = #{isDelete,javaType=Ebool,typeHandler=EnumOrdinalTypeHandler},
+						status = #{status,javaType=Ebool,typeHandler=EnumOrdinalTypeHandler},
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="TroleInfo" flushCache="false">
+		<![CDATA[
+			delete from t_role_info where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="false">
+		<![CDATA[
+			SELECT count("id") FROM t_role_info
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="RoleRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_role_info
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="RoleRM" useCache="false">
+			SELECT * FROM t_role_info 
+				 <if test="firstIndex != null and pageSize != null">
+				 	LIMIT #{firstIndex} ,#{pageSize}
+				 </if>
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="false">
+			SELECT count(`id`) FROM t_role_info   
+	</select>
+	
+	<!--9.查询记录集 -->
+	<select id="findSystemList" resultMap="RoleRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_role_info where is_system = 1
+		]]>
+	</select>
+	<!--10.查询记录集 -->
+	<select id="findListByAdminUserId" parameterType="int" resultMap="RoleRM" useCache="false">
+			SELECT a.* FROM t_role_info a 
+						INNER JOIN  t_user_role_ref b on a.id = b.role_id
+						INNER JOIN  t_admin_user_info c on c.id = b.user_id
+					where  c.id = #{id}
+	</select>
+	
+	<!--11.删除  -->
+	<delete id="deleteRolePurviewRefByRole" parameterType="TroleInfo" flushCache="false">
+		<![CDATA[
+			delete from t_role_purview_ref where role_id = #{id}
+		]]>
+	</delete>
+	
+	<!--13.插入-->
+	<insert id="saveRoleAdminUserRef" parameterType="hashMap"  keyProperty="id" useGeneratedKeys="true" flushCache="false">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_user_role_ref 
+				(role_id,user_id)
+					values
+				(#{role.id},#{user.id})
+		]]>
+	</insert>
+	
+</mapper>

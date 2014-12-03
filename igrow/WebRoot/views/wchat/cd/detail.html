@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-control" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width; maximum-scale=1.0;  user-scalable=no; initial-scale=1.0" />
+    <title>卡券详情</title>
+    <link rel="stylesheet" type="text/css" href="/borMall/css/wchat/cardDetail.css">
+    <script type="text/javascript" src="/borMall/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+        var serverUrl = "http://115.29.232.103:8080/";
+    	var listCount = 0;
+    	var en_length;
+        var sUserAgent = navigator.userAgent.toLowerCase();
+        alert(sUserAgent);
+        var bIsAndroid = sUserAgent.match(/android/i) == "android";
+        if (bIsAndroid) {
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+                var docH = document.documentElement.clientHeight;
+                if ($("body").height() - 1 < docH) {
+                    $("#contenter").animate({ "height": docH + "px" }, 500);
+                }
+                WeixinJSBridge.call('hideToolbar');
+            });
+
+        }
+        //页面初始化
+        var sid = "";
+        $(function(){
+        	//隐藏弹层
+        	var id = "pVE3-smVFiHgoI2L41VLw9UCrueo";
+        	//loadDetail(id);
+        });
+      	//加载详情
+        function loadDetail(id) {
+        	$.ajax({
+    			url : '/borMall/wchat/ds/detail.do?wechat_card_js=1&id=' + getUrlParam("id"),
+    			type : 'POST',
+    			async : false,
+    			dataType : "json",
+    			timeout : 5000, //超时时间设置，单位毫秒
+    			async : false,
+    			data : null,
+    			success : function(data) {
+    				   var dataObj = data.d;
+    				   if(dataObj == null || dataObj == "undefined" || typeof(dataObj) == "undefined"){
+    						return;
+    				   }else{
+    					   
+    				   }
+    			}
+        	 });
+        }
+      	//领取
+        function receive(id) {
+        	id = "pVE3-smVFiHgoI2L41VLw9UCrueo";
+        	alert(id);
+			var receiveUrl = "receive.jsp?wechat_card_js=1&id="+id;
+		    window.location.href = receiveUrl ;
+        }
+       	
+        $(window).scroll(function() {  
+            var o = $('#pincontainer');  
+            if(o!=null && o.length !=0){  
+            var hght= document.documentElement.scrollHeight;
+            var clientHeight = document.documentElement.clientHeight;  
+            var top= window.pageYOffset ||   
+                              (document.compatMode == 'CSS1Compat' ?    
+                              document.documentElement.scrollTop :   
+                              document.body.scrollTop);
+            var browserName=navigator.userAgent.toLowerCase();
+        	if(/webkit/i.test(browserName) &&!(/chrome/i.test(browserName) && /webkit/i.test(browserName) && /mozilla/i.test(browserName))){
+        		if(top + 100 >=(parseInt(hght)-clientHeight)){
+        		   	  if($("#listCount").val()==0){
+        		   		  $(".load_new_list").css("display","none");
+        		   		  return;
+        		     	  }else{
+        		     		//loadNewList();
+        		     	  }
+        		     }
+        	 
+        	}else{
+        		if(top>=(parseInt(hght)-clientHeight)){
+        		 	  if($("#listCount").val()==0){
+        		 		  $(".load_new_list").css("display","none");
+        		 		  return;
+        		   	  }else{
+        		   		//loadNewList();
+        		   	  }
+        		}      
+        		}
+            }
+            $(".designList").find("p").each(function(){
+        		if($(this).hasClass("pro_name")){
+        			var val = $(this).text();
+        		    if(zGetLength(val)>150){
+        		        var ss = getStr(val,150);
+        		        $(this).text(ss+"···");
+        		    }
+        		}
+        	})
+        });
+        
+    </script>
+</head>
+<div class="content" id="pincontainer">
+	<ul class="cardCoupons">
+    	<li><p>50元创意代金券</p><img src="http://115.29.232.103:9000/cd/cd1.jpg" width="65%" class="cardImg" /><a class="btn_Receive" onclick="receive('')">领取</a></li>
+        <div class="clear"></div>
+    </ul>
+</div>
+</html>
+

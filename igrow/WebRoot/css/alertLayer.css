@@ -1,0 +1,6 @@
+*{ margin:0; padding:0;}
+.elastic_layer{ position:fixed; left:0; top:0; width:100%; height:100%; display:none; z-index:20}
+.black_Bg{opacity:0.6;  filter: alpha(opacity=60);  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=60); width:100%; left:0; top:0; height:100%; background-color:#000;}
+.show_tip_infor{ background:url(saveWrong.png) no-repeat 0 center; width:246px; height:105px; position:fixed; left:50%; top:50%; margin:-53px 0 0 -123px;}
+.null_text{ height:105px; width:95px; display:inline-block; *display:inline; *zoom:1; vertical-align:middle; font-size:0; line-height:0;}
+.tip_text{ height:auto; width:125px; display:inline-block; *display:inline; *zoom:1; vertical-align:middle; font-size:14px; color:#4d4d4d; font-family:微软雅黑; line-height:20px;}

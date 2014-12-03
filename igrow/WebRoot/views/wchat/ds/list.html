@@ -1,0 +1,404 @@
+﻿﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-control" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width; maximum-scale=1.0;  user-scalable=no; initial-scale=1.0" />
+    <title>设计师列表</title>
+    <link href="/borMall/css/wchat/design_list.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/borMall/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/borMall/js/wchat/load.js"></script>
+</head>
+
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    WeixinJSBridge.call('hideToolbar');
+});
+var listCount = 0;
+var en_length;
+var openid  = "";
+$(function(){
+	//获取本地openid
+	openid  = localStorage.ls_openid;
+	if(openid == "" || openid == null || openid == "undefined" || typeof(openid) == "undefined" ){
+		//获取参数中openid
+		openid = getUrlParam("opernid"); 
+	}
+	if(openid == "" || openid == null || openid == "undefined" || typeof(openid) == "undefined" ){
+		var code = getUrlParam("code");
+		if(code == "" || code == null || code == "undefined" || typeof(code) == "undefined" ){
+			openid = "";
+		}else{
+			//通过参数code获取openid
+			getOpenId(code);
+		}
+	}
+	//alert(openid);
+	//清除本地变量
+	localStorage.removeItem("l_oship");
+	localStorage.removeItem("l_contact");
+	localStorage.removeItem("l_phone");
+	localStorage.removeItem("l_address");
+	localStorage.removeItem("l_provinceId");
+	localStorage.removeItem("l_cityId");
+	localStorage.removeItem("l_areaId");
+	localStorage.removeItem("l_amount");
+	localStorage.removeItem("l_pricenow");  
+	localStorage.l_hotelid = getUrlParam("hid");//设置酒店编号
+	
+	$("#listCount").val("1");  
+	loadProductList(getUrlParam("hid"));
+	start_execution();
+	$(".product_list").find("p").each(function(){
+		if($(this).hasClass("pro_name")){
+			var val = $(this).text();
+		    if(zGetLength(val)>58){
+		        var ss = getStr(val,58);
+		        $(this).text(ss+"···");
+		    }
+		}
+	})
+})
+$(window).resize(function (){
+	start_execution();
+})
+function start_execution(){
+	var winW = document.documentElement.clientWidth;
+	//var pro_img_width = parseInt(winW * 0.5);
+	var pro_img_height = parseInt((winW*(1-0.12))/1.561);
+	$(".pro_img").css({"height": pro_img_height+"px",});
+	//$(".pro_name").css("height", pro_img_height - 25 - 20 + "px");
+	//$(".right_box").css("width", winW - winW * 0.08 - pro_img_width - 10 +"px")
+	var _picHN = parseInt(winW * 410 / 640);
+	$(".n_first_cont").css({"width": winW +"px", "height":_picHN +"px"})
+	
+}
+$(window).scroll(function() {  
+    var o = $('#pincontainer');  
+    if(o!=null && o.length !=0){  
+    var hght= document.documentElement.scrollHeight;
+    var clientHeight = document.documentElement.clientHeight;  
+    var top= window.pageYOffset ||   
+                      (document.compatMode == 'CSS1Compat' ?    
+                      document.documentElement.scrollTop :   
+                      document.body.scrollTop);
+    var browserName=navigator.userAgent.toLowerCase();
+	if(/webkit/i.test(browserName) &&!(/chrome/i.test(browserName) && /webkit/i.test(browserName) && /mozilla/i.test(browserName))){
+		if(top + 100 >=(parseInt(hght)-clientHeight)){
+		   	  if($("#listCount").val()==0){
+		   		  $(".load_new_list").css("display","none");
+		   		  return;
+		     	  }else{
+		     		loadNewList();
+		     	  }
+		     }
+	 
+	}else{
+		if(top>=(parseInt(hght)-clientHeight)){
+		 	  if($("#listCount").val()==0){
+		 		  $(".load_new_list").css("display","none");
+		 		  return;
+		   	  }else{
+		   		loadNewList();
+		   	  }
+		}      
+		}
+    }
+    $(".product_list").find("p").each(function(){
+		if($(this).hasClass("pro_name")){
+			var val = $(this).text();
+		    if(zGetLength(val)>150){
+		        var ss = getStr(val,150);
+		        $(this).text(ss+"···");
+		    }
+		}
+	})
+});
+function loadlistNone(){
+	$(".load_new_list").css("display","none");
+}
+var pg = 0;    
+function loadNewList(){
+	pg = pg +1;
+	$.ajax({
+		url : '/borMall/wchat/ds/list.do?pg='+pg,
+		type : 'POST',
+		async : false,
+		timeout : 5000, //超时时间设置，单位毫秒
+		dataType : "json",
+		data : null,
+		success : function(data) {
+			var dataObj;
+			dataObj = data.d;
+			if($("#listNum").val() - listCount<= 12){
+      			$(".load_new_list").css("display","none");
+      		}
+			if(dataObj == null || dataObj == "undefined" || typeof(dataObj) == "undefined" || dataObj.dlist == null || dataObj.dlist == "undefined" || typeof(dataObj.dlist) == "undefined"){
+				$(".load_new_list").css("display","none");
+				$(".product_list").animate({"paddingBottom":"0px"});
+				$("#listCount").val(0);
+			}else{ 
+				if(dataObj.hname != "该设计师不存在"){
+					var plists = dataObj.dlist;
+					if(plists.length == "undefined" || typeof(plists.length) == "undefined"){
+					    var plistsLength = 1;
+					}else{
+						var plistsLength = plists.length;
+					}
+					for(var i=0;i<plistsLength;i++){
+						var stausCls = "";
+						if(plists[i].status == 0){
+							stausCls = "tip_designOffline";
+						}else if(plists[i].status == 1){
+							stausCls = "tip_designStyle";
+						}else if(plists[i].status == 2){
+							stausCls = "tip_designBusy";
+						}else{
+							stausCls = "tip_designOffline";
+						}
+						if(i%2==1){
+						   $(".product_list").append("<a href='detail.html?openid="+openid+"&id="+plists[i].id+"&hid="+plists[i].hid+"'><li><h2 class='design_title'><img src='"+data.imgserver+plists[i].dsimg+"' width='33'>"+plists[i].name+"<span class='tip_designStyle "+ stausCls +"'></span></h2><div class='summery_box'><p class='pro_name'>["+plists[i].pdate+"]"+plists[i].pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists[i].price+"</i></b></p><p class='pro_img'><img src='"+data.imgserver+plists[i].pimg+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>");
+						}else{
+							if(plistsLength == "undefined" || typeof(plists.length) == "undefined"){
+								  $(".product_list").append("<a href='detail.html?openid="+openid+"&id="+plists[i].id+"&hid="+plists[i].hid+"'><li><h2 class='design_title'><img src='"+data.imgserver+plists[i].dsimg+"' width='33'>"+plists[i].name+"<span class='tip_designStyle "+ stausCls +"'></span></h2><div class='summery_box'><p class='pro_name'>["+plists[i].pdate+"]"+plists[i].pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists.price+"</i></b></p><p class='pro_img'><img src='"+data.imgserver+plists.pimg+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>")
+							}else{
+								  $(".product_list").append("<a href='detail.html?openid="+openid+"&id="+plists[i].id+"&hid="+plists[i].hid+"'><li><h2 class='design_title'><img src='"+data.imgserver+plists[i].dsimg+"' width='33'>"+plists[i].name+"<span class='tip_designStyle "+ stausCls +"'></span></h2><div class='summery_box'><p class='pro_name'>["+plists[i].pdate+"]"+plists[i].pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists[i].price+"</i></b></p><p class='pro_img'><img src='"+data.imgserver+plists[i].pimg+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>")
+						    }
+						}
+						start_execution();
+						listCount = listCount + 1;
+					}
+					//$(".load_new_list").css("display","none");
+				}
+		   }
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown) {
+           if(textStatus == "timeout"){
+        	   $(".load_new_list").css("display","none");
+           }else{
+        	   $(".load_new_list").css("display","none");
+           }
+        }
+		
+	});
+}
+	
+function loadProductList(hid) {
+	$.ajax({
+		url : '/borMall/wchat/ds/list.do?pg=0',
+		type : 'POST',
+		async : false,
+		timeout : 5000, //超时时间设置，单位毫秒
+		dataType : "json",
+		data : null,
+		success : function(data) {
+			var dataObj;
+			$("#hotelName").text(data.message);
+			//localStorage.l_plistUrl = data.projectPath+"boraMallH5T/views/frontn/product/plist.html?hid="+hid;
+			dataObj = data.d;
+			if(dataObj == null || dataObj == "undefined" || typeof(dataObj) == "undefined"){
+				 $("#hotelName").text("暂无设计师");
+				 $("#Header").show();
+			}else{
+				$("#listNum").val(dataObj.num);
+				//alert(dataObj.num);
+				if(dataObj.num<= 12){
+	      			$(".load_new_list").css("display","none");
+	      		}
+				$("#hotelName").html(dataObj.hname);
+				if(dataObj.hname != "该酒店不存在"){
+					var plists = dataObj.dlist;
+					
+					if(plists == "undefined" || typeof(plists) == "undefined"){
+							$(".no_hotel_pro").show();
+					}else{
+						if(plists.length == "undefined" || typeof(plists.length) == "undefined"){
+						    var plistsLength = 1;
+						}else{
+							var plistsLength = plists.length;
+						}
+						$(".n_first_cont img").attr("src",data.imgUrl+plists[0].img);
+						$(".n_first_cont a").attr("href","product.html?pid="+plists[0].pid+"&hid="+getUrlParam("hid"));
+						if(plists.length == 1){
+							$("#shareImg").val(data.imgUrl+plists[0].img);
+						}
+						for(var i=0;i<plistsLength;i++){
+							var stausCls = "";
+							if(plists[i].status == 0){
+								stausCls = "tip_designOffline";
+							}else if(plists[i].status == 1){
+								stausCls = "tip_designStyle";
+							}else if(plists[i].status == 2){
+								stausCls = "tip_designBusy";
+							}else{
+								stausCls = "tip_designOffline";
+							}
+							if(i%2==1){
+							   $(".product_list").append("<a href='detail.html?openid="+openid+"&id="+plists[i].id+"&hid="+plists[i].hid+"'><li><h2 class='design_title'><img src='"+data.imgserver+plists[i].dsimg+"' width='33'>"+plists[i].name+"<span class='tip_designStyle "+ stausCls +"'></span></h2><div class='summery_box'><p class='pro_name'>["+plists[i].pdate+"]"+plists[i].pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists[i].price+"</i></b></p><p class='pro_img'><img src='"+data.imgserver+plists[i].pimg+"' width='100%'  height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>")
+							}else{
+								if(plistsLength == "undefined" || typeof(plists.length) == "undefined"){
+									   $(".product_list").append("<a href='detail.html?openid="+openid+"&id="+plists[i].id+"&hid="+plists[i].hid+"'><li><h2 class='design_title'><img src='"+data.imgserver+plists[i].dsimg+"' width='33'>"+plists[i].name+"<span class='tip_designStyle "+ stausCls +"'></span></h2><div class='summery_box'><p class='pro_name'>["+plists[i].pdate+"]"+plists[i].pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists[i].price+"</i></b></p><p class='pro_img'><img src='"+data.imgserver+plists[i].pimg+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>")
+							    }else{
+									   $(".product_list").append("<a href='detail.html?openid="+openid+"&id="+plists[i].id+"&hid="+plists[i].hid+"'><li><h2 class='design_title'><img src='"+data.imgserver+plists[i].dsimg+"' width='33'>"+plists[i].name+"<span class='tip_designStyle "+ stausCls +"'></span></h2><div class='summery_box'><p class='pro_name'>["+plists[i].pdate+"]"+plists[i].pname+"</p><p class='pro_price'><b class='now_price'>￥<i class='p_price'>"+plists[i].price+"</i></b></p><p class='pro_img'><img src='"+data.imgserver+plists[i].pimg+"' width='100%' height='100%' /></p><div class='howMuchPeo'><p class='buyNum'><i id='BuyNum'>"+plists[i].sales+"</i>人已购买</p><p class='shareNum'><i id='ShareNum'>"+plists[i].share+"</i>人已分享</p><div class='clear'></div></div></div></li></a>")
+						        }
+							}
+							if(plists != "undefined" && typeof(plists) != "undefined"){
+								if(plists[0] != "undefined" && typeof(plists[0]) != "undefined"){
+									$("#shareImg").val(data.imgUrl+plists[0].img);
+								}else{ 
+									$("#shareImg").val(data.imgUrl+plists.img);
+							    }
+							}
+							listCount = listCount + 1;
+							start_execution();
+						}
+						if($("#shareImg").val() == ""){
+							$(".no_hotel_pro").show();
+						}
+					}
+				}else{
+					$(".load_new_list").css("display","none");
+				}
+		   }
+		},
+		error:function(XMLHttpRequest, textStatus, errorThrown) {
+           if(textStatus == "timeout"){
+        	    $("#hotelName").text("连接超时，请检查网络");
+        	    $("#Header").show();
+           }else{
+        	    $("#hotelName").text("连接超时，请检查网络");
+        	    $("#Header").show();
+           }
+        }
+		
+	});
+}
+//获取OPENID
+function getOpenId(code) {
+	$.ajax({
+		url : '/borMall/common/oauth.do?code='+code,
+		type : 'POST',
+		async : false,
+		timeout : 100, //超时时间设置，单位毫秒
+		dataType : "json",
+		data : null,
+		success : function(data) {
+			if(data.status == 'y'){
+				localStorage.ls_openid = data.value;
+				openid = data.value;
+				return ;
+			}else{
+				return ;
+			}
+		},
+	});
+}
+
+//分享
+function shareFriend() {
+	var sharurl = localStorage.l_plistUrl+"&a=1";
+	var inputValue = $("#hotelName").html()+"热销商品";
+	$("#hotelNames").val(inputValue);
+	var hotelTitle =  $("#pro_titlehidden").val();
+	var $dddd = "我在"+$("#hotelName").html()+"发现一些宝贝，已亲自体验，分享给各位亲朋好友。";
+	//re = new RegExp("<br>","g");  
+    WeixinJSBridge.invoke('sendAppMessage',{
+                           // "appid":window.shareData.appid,
+                            "img_url":$("#shareImg").val(),
+                            "img_width":"640",
+                            "img_height":"640",
+                            "link":sharurl,
+                            "desc":$dddd,
+                            "title":$("#hotelNames").val(),
+                            }, function(res) {
+                            _report('send_msg', res.err_msg);
+                            })
+}
+function shareTimeline() {
+	var sharurl = localStorage.l_plistUrl+"&a=1";
+	var inputValue = $("#hotelName").html()+"热销商品";
+	$("#hotelNames").val(inputValue);
+	var hotelTitle =  $("#hotelName").html();
+	var $dddd = "我在"+hotelTitle+"发现一些宝贝，已亲自体验，分享给各位亲朋好友。";
+    WeixinJSBridge.invoke('shareTimeline',{
+    	 					"img_url":$("#shareImg").val(),
+                            "img_width":"640",
+                            "img_height":"640",
+                            "link":sharurl,
+                            "desc":$dddd,
+                            "title":inputValue,
+                            }, function(res) {
+                            _report('timeline', res.err_msg);
+                            });
+}
+
+function shareWeibo(){
+	var sharurl = localStorage.l_plistUrl+"&a=1";
+	var hotelTitle =  $("#hotelName").html();
+	var $dddd = "我在"+hotelTitle+"发现一件宝贝，已亲自体验，分享给各位亲朋好友。";
+ 	WeixinJSBridge.invoke('shareWeibo',{
+ 							"img_url":$("#shareImg").val(),
+				            "img_width":"640",
+				            "img_height":"640",
+				            "link":sharurl,
+				            "desc":$dddd,
+				            "title": $dddd,
+				            }, function(res) {
+				            _report('timeline', res.err_msg);
+				            });
+}
+// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+
+    // 发送给好友
+    WeixinJSBridge.on('menu:share:appmessage', function(argv){
+        shareFriend();
+        });
+
+    // 分享到朋友圈
+    WeixinJSBridge.on('menu:share:timeline', function(argv){
+        shareTimeline();
+        });
+
+    // 分享到微博
+    WeixinJSBridge.on('menu:share:weibo', function(argv){
+        shareWeibo();
+        });
+}, false)
+function zGetLength(str) {
+	var sum_chinese = str.length - str.replace(/[^\x00-\xff]/g, "").length;
+	var sum = sum_chinese * 2 + str.replace(/[^\x00-\xff]/g, "").length;
+	return sum;
+}
+var getStr = function(str,n){
+	var tmpStr = str.substr(0,n);
+	var tmpCode = tmpStr.replace(/[^\x00-\xff]/g,'\r\n').split('');
+	n = (tmpCode[n-1]=='\r')?n-2:n-1;
+	var l = tmpCode.slice(0,n).join('').replace(/\r\n/g,'*').length+1;
+	return tmpStr.substr(0,l);
+};
+        
+</script>
+<body  id="pincontainer">
+<div id="Header" style="display:none;">
+	<h2><span id="hotelName">数据加载中</span></h2>
+</div>
+<div class="no_hotel_pro"></div>
+<input type="hidden" id="hotelNames" />
+<input type="hidden" id="shareImg" />
+
+<div id="Contenter">   
+<input type="hidden" id="listCount" value="1"/>
+<input type="hidden" id="listNum"/>
+	<ul class="product_list">
+
+    </ul>
+    <div class="clear"></div>
+    <div class="load_new_list"><img src ="/boraMallH5T/cssn/images/loading.gif" width="30px" height="30px" />加载中...</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.RedirectUrlDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="RedirectUrlRM" type="TredirectUrlInfo">
+		<id property="id" column="id" />
+		<result property="name" column="name"/>
+		<result property="sn" column="sn"/>
+		<result property="url" column="url"/>
+		<result property="remark" column="remark"/>
+		<result property="redirectUrl" column="redirect_url"/>
+		<result property="createDate" column="create_date"/>
+		<result property="modifyDate" column="modify_date"/>
+		<result property="createOperator" column="create_operator"/>
+		<result property="modifyOperator" column="modify_operator"/>	
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="RedirectUrlRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_redirect_url_info WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="TredirectUrlInfo"  keyProperty="id" useGeneratedKeys="true" flushCache="true">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_redirect_url_info 
+				(name,sn,url,redirect_url,remark,create_date,modify_date,create_operator,modify_operator)
+					values
+				(#{name},#{sn},#{url},#{redirectUrl},#{remark},
+				#{createDate},#{modifyDate},#{createOperator},#{modifyOperator})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="TredirectUrlInfo" flushCache="true">
+		<![CDATA[
+			update t_redirect_url_info 
+				  set
+						name = #{name},
+						sn = #{sn},
+						url = #{url},
+						redirect_url = #{redirectUrl},
+						remark = #{remark},
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="TredirectUrlInfo" flushCache="true">
+		<![CDATA[
+			delete from t_redirect_url_info where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="true">
+		<![CDATA[
+			SELECT count("id") FROM t_redirect_url_info
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="RedirectUrlRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_redirect_url_info
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="RedirectUrlRM" useCache="true">
+			SELECT * FROM t_redirect_url_info  where 1=1
+				 <if test="name != null">
+				     and name like "%"#{name}"%" 
+			     </if>
+				 <if test="orderBy != null and order != null">
+				 	ORDER BY ${orderBy} ${order}
+				 </if>
+				 <if test="firstIndex != null and pageSize != null">
+				 	LIMIT #{firstIndex} ,#{pageSize}
+				 </if>
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="true">
+			SELECT count(`id`) FROM t_redirect_url_info where 1=1
+			<if test="name != null">
+				    and name like "%"#{name}"%" 
+			</if>
+	</select>
+	
+	 <!--9.依据Sn查询对象  -->
+	<select id="findBySn" parameterType="String" resultMap="RedirectUrlRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_redirect_url_info WHERE sn = #{sn}
+				LIMIT 0 ,1
+		]]>
+	</select>
+	
+	
+</mapper>

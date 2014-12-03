@@ -1,0 +1,118 @@
+/* contenter */
+#Contenter{ height:100%; width:100%; content:","; float:left}
+
+/* banner */
+#Banner{ width:100%; height:100%; background-color:#fff; position:relative; overflow:hidden; min-width:1024px; margin-top:86px;}
+.banner_bottom{ width:100%; height:100%; overflow:hidden; }
+.wrapper_banner{ width:100%; height:100%; position:absolute; left:0; top:0; z-index:10 }
+.wp_font{ width:59%; float:left; height:100%; font-size:16px; font-family:'Roboto'; color:#5B6064; font-weight:300;}
+.wp_font ul{position:relative; left:800px; top:50px;}
+.wp_font ul li{width:800px; position:absolute; left:0; top:0;}
+.wp_font h2{ font-size:24px; font-family:'Roboto'; color:#5B6064; font-weight:300; padding-bottom:30px;}
+.wp_font p{ line-height:26px; padding-right:100px;}
+.wp_font_layer{ width:100%; overflow:hidden; height:100%; position:relative;}
+
+.wp_img{ float:right; width:382px; padding-right:14%; position:relative;  }
+.wp_img_layer{ width:322px; height:570px; overflow:hidden; position:absolute; left:0; top:0; z-index:10}
+.wp_img_layer ul{ width:100%; height:100%; position:relative; overflow:hidden}
+.wp_img_layer ul li{ position:absolute; left:322px; top:0; width:100%; height:100%;}
+
+
+
+.wp_coin{ width:100%; text-align:center; clear:both; padding-top:50px; position:absolute; left:0; bottom:25px; z-index:100;  }
+.wp_coin li{ display:inline-block; *display:inline; zoom:1; margin-right:25px; background:url(images/coin.png) no-repeat 0 -16px; width:16px; height:16px; cursor:pointer; }
+.wp_coin li a{  }
+.wp_coin li.wp_currse{ background-position:0 0;}
+
+.cont_box{ min-width:1024px;}
+/* cont02 */
+.cont_box_2{ padding-top:121px;}
+.cont_02_left{ padding-left:10%; padding-right:7%; padding-bottom:74px;}
+.cont_02_right{ width:34%}
+
+/* cont03 */
+.cont_box_3{clear:both; background-color:#F6F6F6;}
+.cont_03_left{ padding-left:10%; padding-right:7%; width:365px;}
+.cont_03_right{ width:34%;}
+.cont_03_null{ width:1px; height:100%;}
+
+/* cont04 */
+.cont_04_left{ width:54%; height:auto; padding-right:7%;}
+.ver_mid{ display:inline-block; *display:inline; zoom:1; vertical-align:middle; clear:both; color:#999; font-size:18px;}
+.ver_mid p{ color:#999; padding-bottom:40px; line-height:30px;}
+.ver_mid p.title_header{ padding-bottom:25px;}
+.ver_mid ul li img{ vertical-align:middle; padding-right:2%;}
+.ver_mid ul li{ width:100%; float:left; font-size:20px;}
+.ver_mid b{ font-weight:lighter; color:#000;}
+
+/* cont05 */
+.cont_05_right{ width:34%}
+
+
+
+/* an and iphone */
+.btn_area{ position:relative;}
+.ban_btn{ position:absolute; bottom:-14%; left:22%; width:608px; height:102px;}
+.android{ background-color:#ff631e; max-width:288px; height:100px; float:left;}
+.iphone{ background-color:#4fc0e8;  float:left; max-width:288px; height:100px;}
+.ban_btn div{ border-radius:6px; text-align:center; max-width:288px; max-height:100px; position:relative}
+.ban_btn .iphone:hover, .ban_btn .iphone:active{ background-color:#69c9eb;}
+.ban_btn .android:hover, .ban_btn .android:active{ background-color:#ff7a40;}
+.ban_btn div:hover, .ban_btn div:active{ cursor:pointer}
+.ban_btn div img{ width:68%;}
+.code_area_box{ width:150px; height:169px; position:absolute; left:50%; margin-left:-75px; bottom:-169px; display:none}
+.put_area{ padding:3px; border-radius:5px; background-color:#fff; margin-top:15px; position:absolute; left:50%; top:54%;}
+
+.code_img{ width:100%; height:100%; display:block; margin-top:10%}
+.ban_btn .code_img img{ width:100%; height:100%;}
+
+.paddingTop10{ position:relative;  width:100%; height:100%; display:block;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

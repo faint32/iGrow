@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.DeceiverAddressDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="DeceiverAddressRM" type="TdeceiverAddress">
+		<id property="id" column="id" />
+		<result property="name" column="name"/>
+		<result property="areaSn" column="area_sn"/>
+		<result property="addressSn" column="address_sn"/>
+		<result property="areaName" column="area"/>
+		<result property="address" column="address"/>
+		<result property="zipCode" column="zip_code"/>
+		<result property="phone" column="phone"/>
+		<result property="mobile" column="mobile"/>
+		<result property="isDefault" column="is_default"
+				typeHandler="EnumOrdinalTypeHandler" javaType="Ebool"/>
+		<result property="isDelete" column="is_delete"
+				typeHandler="EnumOrdinalTypeHandler" javaType="Ebool"/>
+		<result property="createDate" column="create_date"/>
+		<result property="modifyDate" column="modify_date"/>
+		<result property="createOperator" column="create_operator"/>
+		<result property="modifyOperator" column="modify_operator"/>	
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="DeceiverAddressRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_deceiver_address_detail WHERE id = #{id} and is_delete = 0
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="TdeceiverAddress"  keyProperty="id" useGeneratedKeys="true" flushCache="true">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_deceiver_address_detail 
+				(name,address_sn,area_sn,area,address,zip_code,phone,mobile,is_default,is_delete,member_id,create_date,modify_date,create_operator,modify_operator)
+					values
+				(#{name},#{addressSn},#{areaSn},#{areaName},#{address},#{zipCode},#{phone},#{mobile},
+				#{isDefault,javaType=Ebool,typeHandler=EnumOrdinalTypeHandler},
+				#{isDelete,javaType=Ebool,typeHandler=EnumOrdinalTypeHandler},
+				#{member.id},
+				#{createDate},#{modifyDate},#{createOperator},#{modifyOperator})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="TdeceiverAddress" flushCache="true">
+		<![CDATA[
+			update t_deceiver_address_detail
+				  set
+						name = #{name},
+						area_sn = #{areaSn},
+						area = #{areaName},
+						address = #{address},
+						zip_code = #{zipCode},
+						phone = #{phone},
+						mobile = #{mobile},
+						is_default = #{isDefault,javaType=Ebool,typeHandler=EnumOrdinalTypeHandler},
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="TdeceiverAddress" flushCache="true">
+		<![CDATA[
+			update t_deceiver_address_detail
+				  set 
+				 		is_delete = #{isDelete,javaType=Ebool,typeHandler=EnumOrdinalTypeHandler},
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					 where id = #{id} 
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="true">
+		<![CDATA[
+			SELECT count("id") FROM t_deceiver_address_detail where is_delete = 0
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="DeceiverAddressRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_deceiver_address_detail where is_delete = 0
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="DeceiverAddressRM" useCache="true">
+			SELECT * FROM t_deceiver_address_detail  where is_delete = 0
+				<if test="member != null">
+				 	and member_id = #{member.id}
+				</if>
+				<if test="orderBy != null and order != null">
+				 	ORDER BY ${orderBy} ${order}
+				 </if>
+				 <if test="firstIndex != null and pageSize != null">
+				 	LIMIT #{firstIndex} ,#{pageSize}
+				 </if>
+				
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="true">
+			SELECT count(`id`) FROM t_deceiver_address_detail where is_delete = 0
+				<if test="member != null">
+				 	and member_id = #{member.id}
+				</if>
+	</select>
+	
+	<!--9.依据地址编号查询对象 -->
+	<select id="findBySn" parameterType="String" resultMap="DeceiverAddressRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_deceiver_address_detail WHERE address_sn = #{addressSn} and is_delete = 0
+		]]>
+	</select>
+	
+	<!--10.依据条件查询对象 -->
+	<select id="findByMemberAndSn" parameterType="hashMap" resultMap="DeceiverAddressRM" useCache="true">
+			SELECT * FROM t_deceiver_address_detail  where is_delete = 0 
+			 	<if test="member != null">
+				 	and member_id = #{member.id}
+				</if>
+				 <if test="addressSn != null">
+				 	and address_sn = #{addressSn}
+				</if>
+				ORDER BY modify_date desc
+				LIMIT 0 ,1
+	</select>
+	
+	<!--11.依据条件查询对象 -->
+	<select id="findDefaultByMember" parameterType="hashMap" resultMap="DeceiverAddressRM" useCache="true">
+			SELECT * FROM t_deceiver_address_detail  where is_delete = 0 and is_default = 1
+			 	<if test="member != null">
+				 	and member_id = #{member.id}
+				</if>
+				ORDER BY modify_date desc
+				LIMIT 0 ,1
+	</select>
+	
+	
+</mapper>

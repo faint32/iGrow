@@ -1,0 +1,75 @@
+.contenter, .listPro, .delivery_address{ float:left;}
+.selectSpecification ul{ padding-top:12px;}
+.selectSpecification li{ width: 100%; float:left}
+.specifyLeft, .specifyRight, .blockfication, .textValue, .blockfication_exp{ float: left;} 
+.specifyLeft{ padding:0 0 12px 0; color:#9f9f9f; font-size:13px; float:left; width:100%}
+.blockfication, .textValue, .blockfication_exp{ border: 1px solid #ddd; background-color: #fff; margin-bottom:12px; min-width: 45px; padding:8px 17px; height:auto; line-height:16px; text-align: center; color: #666666; margin-right: 24px; font-size:15px;}
+.textValue{ margin-bottom:0;}
+.blockficationThis{ border-color:#50b5eb; background-color:#50b5eb; color: #fff}
+.shortBlock{ width: 46px;}
+.listPro_out_border{ width:100%; border-top: 1px solid #cccccc; border-bottom:1px solid #ccc; background-color: #fff; float:left}
+.listPro{ padding:0 4%; width:92%;}
+.listPro ul{ padding:0 2%;}
+.listPro li{ border-bottom:1px dashed #ccc; height: 44px; line-height: 44px; background:url(images/h5_verticalIcon.png) no-repeat 6px center; background-size:3px 14px; padding-left:18px;}
+.listPro li:last-child{ border-bottom: none;}
+.listPro a{ background: url(images/h5_arrowIcon.png) no-repeat right center; color:#333; font-size:16px; background-size: 16px 16px; width: 100%; height: 100%; display: block;}
+.Topthing .blockfication{ vertical-align: middle; margin-bottom: 0;}
+.roomDetailShow{ width:100%; font-size:0; line-height:0}
+
+
+.fontShowD h2{ font-size:14px; text-align:center; word-break:break-all; overflow:hidden;white-space: nowrap;text-overflow: ellipsis; color:#3d4245; font-weight:normal}
+.pro_price{ font-size:14px; text-align:center; line-height:17px; padding:7px 0 4px;}
+.pro_detail_addNew .Interspace{ padding:0 4% 2%;}
+.pro_newDetail img{ width:100%; line-height:0; font-size:0; padding:5px 0;}
+#pro_detail_cont, #pro_detail_cont_busInfor{border-top: 1px solid #DDDDDD; width:100%; background-color:#fff; padding-bottom:15px; display:none}
+.pro_detail_addNew{clear:both}
+#pro_detail_cont_busInfor{ display:block; background:none; border-top:none; height:138px; border-top:1px solid #ddd; padding-bottom:0; padding-top:0}
+#pro_detail_cont_busInfor .Interspace{ display:none;  padding-top:23px; }
+#pro_detail_cont_busInfor .Interspace .Interspace{ border-bottom:0; padding-top:0}
+.pro_detail_title{ position:static; border-top:1px solid #ddd; width:100%; height:47px; line-height:47px; background:url(images/H5_downArrow_new.png) no-repeat 96% center #fff; background-size:12px 12px;}
+.pro_detail_title h4{ height:48px; padding:0 4%; color:#999; font-weight:normal}
+.show_child{ background-image:url(images/H5_downArrow_top.png);  background-size:12px 12px;}
+.border_bottom_detail{ border-bottom:1px solid #ccc;}
+.pro_newDetail{ color:#4a4a4a; line-height:24px;}
+.pro_detail_addNew .delivery_address{ width:100%; border-top:none; padding:8px 0 0}
+.pro_detail_addNew .delivery_address p{ padding-left:0;}
+
+.amount_price .Interspace{ padding:0 4%}
+.detail_p_n{ color:#50b5eb; font-size:14px; background:url(images/yellow_icon_n.png) no-repeat right center; background-size:8px 13px; padding-right:15px; position: absolute; right: 0; top: 2px;}
+
+.spe_infor_n{ width:100%; padding-top:10px; border-bottom:1px solid #ddd;}
+label.name_label{ float:left;}
+.a_s{ color:#279ddc; font-size:13px; float:left; padding-right:13px; overflow: hidden; width:86px; white-space: nowrap;text-overflow: ellipsis;}
+.after_selecting{ display:inline-block; padding-left:11px;}
+
+/* new add for buyNum */
+.buyNum, .shareNum{ color:#999; font-size:12px; height:14px; line-height:14px; padding-top:5px; float:left;}
+#BuyNum, #ShareNum{ color:#279ddc;}
+.shareNum{ float:right}
+.btn_share{ padding-top:13px;}
+
+/* new add design */
+.designList, .contenter{ width:100%;}
+.design_detail_summary{ text-align:center; padding:10px 0;}
+.design_simple{ padding:0 2%; width:96%; white-space: nowrap;text-overflow: ellipsis; overflow: hidden; color:#999}
+.design_shareNum, .design_simple{ color:#999; font-size:12px;}
+.design_simple{ padding-top:7px;}
+.design_shareNum{ line-height:17px; padding-bottom:6px;}
+.design_name{ font-size:16px; padding-top:7px;}
+.design_Avatar img{ border-radius:64px;}
+.designStyle img{ vertical-align: middle; margin-right:4px; margin-top:-2px;}
+.contactHe, .rest{ border-radius:3px; width:109px; height:28px; border:1px solid #ccc; color:#ccc; font-size:12px; display:inline-block; line-height:28px;}
+.rest{ display:none}
+.contactHe{ border:1px solid #50b5eb; color:#50b5eb}
+.selectSpecification p{ text-indent:2em; color:#3d4245}
+.fontShowD_out_border{padding:4px 15px 0;}
+.designList li{ padding:11px 0 13px; border-bottom:1px solid #ddd;}
+
+
+.layer_yN{ position:fixed; left:0; top:0; width:100%; height:100%;display:none}
+.block_layer{ position:absolute; left:0; top:0;  background-color:rgba(0,0,0,0.3); width:100%; height:100%;}
+.tipYsNo{ position:absolute; left:50%; top:45%; width:270px; height:103px; margin:-50px 0 0 -135px; background-color:#fff; border-radius:6px;}
+.tip_title{ height:54px; padding-top:4px; line-height:54px; color:#333; font-size:13px; text-align:center; border-bottom:1px solid #ddd;}
+.btn_y_n{ height:44px; line-height:44px;}
+.btn_y_n a.btn_submit{ width:135px; text-align:center; float:left; font-size:16px; color:#50b5eb}
+.btn_y_n a.btn_cancle{ width:134px;border-right:1px solid #ddd; }

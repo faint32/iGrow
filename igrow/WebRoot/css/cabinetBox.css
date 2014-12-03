@@ -1,0 +1,59 @@
+/* cabinetBox*/
+.cab_main{ margin:0 auto; padding:9px; border:1px solid #ccc; width:505px;}
+.cabi_summary{ width:503px; border:1px solid #ccc;}
+.cabi_title{ font-size:16px; color:#333; border-bottom:1px solid #ccc; padding:9px 0; height:40px; line-height:40px;}
+.cabi_serialNum{ padding-left:29px; width:224px; float:left}
+.cabi_serialNum b, .venueName b{ width:79px; float:left}
+#CabiSerNum{ width:138px;}
+.venueName{ padding-left:6px;}
+#CabiHotelName{ width:159px;}
+.cabi_cont{border-left:1px solid #ccc; border-top:1px solid #ccc;}
+.cabi_box{ border-bottom:1px solid #ccc; float:left; border-right:1px solid #ccc; width:110px; padding:5px; height:52px; position:relative;}
+.cabiBoxNum{ border-radius:12px;width:24px; height:24px; background-color:#239cdc; text-align:center; line-height:24px; color:#fff; font-size:14px; font-family:Arial; position:absolute; left:9px; top:9px; z-index:2}
+.cabiBoxNull{ background:url(images/null_icon.png) no-repeat 0 -0; position:absolute; left:23px; top:8px; z-index:1; width:46px; height:46px; }
+.cabi_b_img{ float:left;}
+.cabi_close_Edit{ padding-left:4px; width:24px; float:left; height:52px;}
+.cabi_close_Edit a{ width:24px; height:24px; display:block; cursor:pointer}
+.cabi_close_Edit a.btn_cabiBoxClose{ background:url(images/btn_cabiBoxClose.png) no-repeat 0 -24px;}
+.cabi_close_Edit a.btn_cabiBoxOpen { background-position:0 0;}
+.btn_cabiBoxEdit{ background:url(images/btn_cabiBoxEdit.png) no-repeat 0 0; margin-top:4px;}
+/* layer for cabinet */
+.layer_cabinet{ position:fixed; width:100%; height:100%; left:0; top:0; z-index:10; display:none}
+.layer_block_cabi{ background-color:#000; opacity:0.6;filter:alpha(opacity=0.6); position:absolute; left:0; top:0; width:100%; height:100%;}
+.empty10 {float: left; padding:10px 0 10px 10px}
+.forIeCss .empty10{ padding-left:5px;}
+.cabi_pro_list table, .goods_edited table{ background-color:#fff; border-collapse:collapse; border:1px solid #ccc;}
+.cabi_pro_list table td, .cabi_pro_list table th, .goods_edited td, .goods_edited th{ border-collapse:collapse; border-bottom:1px solid #ccc;}
+.n_cabiPro{ display:block; width:79px; text-align:center; line-height:30px; height:30px;}
+.saveThisCabiBox{ float:right;}
+.btn_saveThisCabiBox{ display:block; background:url(images/n_save_btn.png) no-repeat 0 0; width:80px; height:30px;}
+.btn_saveThisCabiBox:hover{ background-position:0 -30px;}
+.l_c_t_title{ width:80px;}
+.cabi_Num label{ width:150px; padding-left:5px;}
+.cabi_inHotel label{ width:185px; padding-left:5px;padding-right:23px;}
+.plaid_number label{ width:122px; padding-left:5px;}
+.cabi_inHotel, .plaid_number{ padding-left:5px;}
+.lay_cabi_title{ font-size:16px;}
+.lay_cabi_title li, .lay_cabi_title b, .lay_cabi_title label{ float:left;font-weight:normal}
+.closeLayer{ float:right; background:url(images/close_btn.png) no-repeat 0 0; width:24px; height:24px; margin-top:8px;}
+.closeLayer:hover{ background-position:0 -24px;}
+.layer_cabi_cont{ padding:6px; background:url("images/d.png") repeat scroll 0 0; width:788px; height:525px; position:absolute; left:50%; top:45%; margin:-268px 0 0 -395px;}
+.lay_cabi_summary{ background-color:#fff; padding:0 0 15px; height:510px;}
+.cabiSummaryBox{padding:10px 25px 0;}
+.lay_cabi_title{  line-height:60px; height:60px; border-bottom:2px solid #e5e5e5; position:relative; font-family:microsoft yahei}
+.lay_cabi_title ul{padding-left:21px;}
+.cabi_search{ padding-top:20px;}
+.cabiSummaryBox .cabi_search{margin-bottom:18px; *margin-bottom:36px;}
+.cabiSummaryBox .cabi_search .confirm-save{height:30px; line-height:30px; border:none}
+.cabi_pro_list{ margin-top:16px; height:324px; overflow-y:auto;}
+.cabi_proEdit{ padding-top:6px;}
+.cabi_proEdit .goods_edited{ padding-bottom:24px;}
+.cabi_proEdit .cabi_pro_list{ margin-top:0; height:213px;}
+.n_cabiPro_Added{ background:#e8e8e8; color:#666; padding:0;width:79px; text-align:center; line-height:30px; height:30px;display:block}
+.cabi_pro_name_eli200{ width:180px;}
+.add_pro_btn:hover{color:#f15834}
+.cabi_table_tbodyTh table th{border-bottom:none;}
+.cabi_table_tbodyTh table{border:none}
+.cabi_pro_list table{border:1px solid #e8e8e8;border-top:none;}
+.cabi_pro_list table td{border-bottom:1px solid #e8e8e8;}
+.cabi_table_tbodyTh{ background:#f5f5f5;border:1px solid #e8e8e8; }

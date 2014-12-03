@@ -1,0 +1,43 @@
+
+#Banner{ overflow:hidden; position:relative;}
+.banner_top{ position:absolute; right:13%; bottom:0;}
+
+.tab_nav{ width:100%; height:130px; background-color:#f4f4f4;}
+.tabwarp{ width:88%; margin:0 auto; line-height:130px; height:130px; max-width:1273px;}
+.tabwarp li{ width:33%; float:left; text-align:center; color:#999; position:relative; cursor:pointer;}
+.ge_r0{ display:none; width:29px; height:14px; position:absolute; left:50%; margin-left:-15px; bottom:-14px;}
+.ge_r0_rightDown{ left:inherit; right:35px;}
+.selectTag .ge_r0{ display:inline-block; *display:inline; zoom:1;}
+.selectTag a{ color:#3db3f2;}
+.tagContent{ display:none; text-align:center; width:100%}
+.selectTag{ display:inline-block; *display:inline; zoom:1;}
+
+.tagContent{ padding-top:60px;}
+
+
+.cont02{ position:relative; background-color:#fff;}
+.cont02_bottom{}
+.cont02 table{ position:absolute; left:0; top:0; width:100%; height:100%; z-index:1}
+.cont02 img{ width:88%;}
+
+.ban_bottom_img, .ban_bottom_img02{ display:inline-block; *display:inline; zoom:1;}
+.ban_bottom_img{ float:right;}
+.ban_bottom_img02{ float:left; position:relative; *float:right}
+.div_h{ position:relative; width:100%; height:100%; left: 12%;}
+/* an and iphone */
+.btn_area{ position:relative;}
+.ban_btn{ position:absolute; top:10%; left:0; width:608px; height:102px;}
+.android{ background-color:#ff631e; width:288px; height:100px; float:left;}
+.iphone{ background-color:#4fc0e8;  float:left; width:288px; height:100px;}
+.ban_btn div{ border-radius:6px; text-align:center; max-width:288px; max-height:100px; position:relative}
+.ban_btn .iphone:hover, .ban_btn .iphone:active{ background-color:#69c9eb;}
+.ban_btn .android:hover, .ban_btn .android:active{ background-color:#ff7a40;}
+.ban_btn div:hover, .ban_btn div:active{ cursor:pointer}
+.ban_btn div img{ width:68%;}
+.code_area_box{ width:150px; height:169px; position:absolute; left:50%; margin-left:-75px; bottom:-169px; display:none}
+.put_area{ padding:3px; border-radius:5px; background-color:#fff; margin-top:15px; position:absolute; left:50%; top:54%;}
+
+.code_img{ width:100%; height:100%; display:inline-block; *display:inline; zoom:1; margin-top:10%; position:relative}
+.ban_btn .code_img img{ width:100%; height:100%;}
+
+.paddingTop10{ position:relative;  width:100%; height:100%; display:inline-block; *display:inline; zoom:1;}

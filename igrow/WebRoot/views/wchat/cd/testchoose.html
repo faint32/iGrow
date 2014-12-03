@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-control" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width; maximum-scale=1.0;  user-scalable=no; initial-scale=1.0" />
+    <title>选择</title>
+    <link rel="stylesheet" type="text/css" href="/borMall/css/wchat/cardDetail.css">
+    <script type="text/javascript" src="/borMall/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+        var serurl = "http://www.1ct.cc";
+        
+		var appId = "wx8a865f88c23ec791",
+   		 	locationId = 271720134,
+   			signType = "SHA1",
+   			cardSign = "ec9283907a232d2f48e5aef44b86d2986bc54de7", //动态
+   			cardId = "",
+   			cardType = "",
+   			timeStamp = 1414226841,
+   			nonceStr= "123123";
+        
+        var ua = navigator.userAgent,
+        	is_ios = /(iPhone|iPad|iPod|iOS)/i.test(ua),
+        	is_android = /(Android)/i.test(ua); 
+      	//获取微信版本号：例如5.2.1
+        function get(){
+	        var reg = /MicroMessenger\/([\d\.]+)/i,
+	        	ret = ua.match(reg);
+	        if (ret && ret[1]){
+	        	return ret[1];
+	        }
+        	return false;
+        }
+        var opfunc = {
+        	"cp-1":function(a, b){
+        		return a < b;
+        	 },
+        	"cp0":function(a, b){
+        		return a == b;
+        	 },
+        	"cp1":function(a, b){
+        		return a > b;
+        	},
+        };
+        
+      //判断版本跟传入的version比较
+      //version为字符串：5.0.1
+      //op = -1小于 0等于 1大于
+      //如果 mmversion <op> version 返回true，否则返回false，如果浏览器不是微信内置webview则返回undefined
+      function cpVersion(version, op, canEq){
+      	var mmversion = get();
+      	if (!mmversion){
+      		return;//如果浏览器不是微信内置webview则返回undefined
+      	}
+      	mmversion = mmversion.split(".");
+      	version = version.split(".");
+      	//5.2.380最后一位是versioncode 不加入判断 所以pop掉
+      	mmversion.pop();
+      	//version.pop();//传递进来比较的version不要理解versioncode这个！
+      	var mmv, v;
+     	var cp = opfunc["cp" + op];
+      	for(var i=0, len=Math.max(mmversion.length,version.length); i<len;++i){
+      		mmv = mmversion[i] || 0;
+      		v = version[i] || 0;
+      		mmv = parseInt(mmv) || 0;
+      		v = parseInt(v) || 0;
+      		var eq = opfunc["cp0"](mmv, v);
+      		if (eq){
+      			continue;
+      		}
+      		return cp(mmv, v);
+      	}
+      	//返回
+      	return (!!canEq||op == 0) ? true : false;
+      }
+      
+      function eqVersion(version){
+   	  	return cpVersion(version, 0);
+   	  }
+   	  function gtVersion(version, canEq){
+   	  	return cpVersion(version, 1, canEq);
+   	  }
+   	  function ltVersion(version, canEq){
+   	  	return cpVersion(version, -1, canEq);
+   	  }
+   	  function isIOS(){
+   	  	return is_ios;
+   	  }
+   	  function isAndroid(){
+   	  	return is_android;
+   	  }
+   	  function getPlatform(){
+	  	if (isIOS()){
+	   	  return "ios";
+	   	}else if(isAndroid()){
+	   	  return "android";
+	   	}
+	  	return "unknown";
+   	  }
+   	  //定义版本号
+   	 var banben = get();
+   	 // 
+   	 function onBridgeReadyold() {
+   		$('.btn_Receive').click(function(e) {
+   			WeixinJSBridge.invoke('chooseCard', {
+	   			"app_id": appId,
+	   			"location_id": locationId,
+	   			"sign_type": signType,
+	   			"card_sign": cardSign,
+	   			"card_id": cardId,
+	   			"card_type": cardType,
+	   			"time_stamp": timeStamp,
+	   			"nonce_str": nonceStr
+   			},
+	   		function(res) {
+   				if(res.err_msg == 'choose_card:ok') {
+   					alert('成功');
+   					
+	    		}else if(res.err_msg == 'choose_card:fail'){
+	    			alert('失败');
+	    		}else if(res.err_msg == 'choose_card:cancel'){
+	    			alert('取消');
+	    		}else{
+	    			alert('未知');
+	    		}
+	   		}); 
+   		});
+   	 }
+   	 
+   	 function onBridgeReady() {
+   		$('.btn_Receive').click(function(e) {
+   			WeixinJSBridge.invoke('chooseCard', {
+   				"app_id": appId,
+   	   			"location_id": locationId,
+   	   			"sign_type": signType,
+   	   			"card_sign": cardSign,
+   	   			"card_id": cardId,
+   	   			"card_type": cardType,
+   	   			"time_stamp": timeStamp,
+   	   			"nonce_str": nonceStr
+   			},
+	   		function(res) {
+   				if(res.err_msg == 'choose_card:ok') {
+   					alert('成功');
+	    		}else if(res.err_msg == 'choose_card:fail'){
+	    			alert('失败');
+	    		}else if(res.err_msg == 'choose_card:cancel'){
+	    			alert('取消');
+	    		}else{
+	    			alert('未知');
+	    		}
+	   		});
+   		});
+   	}
+   	
+   	//WeixinJSBridge是否加载完成
+   	if(typeof WeixinJSBridge == "undefined") {
+		if(get()>='5.5'){
+			document.addEventListener('WeixinJSBridgeReady', onBridgeReady);
+		}else{
+			document.addEventListener('WeixinJSBridgeReady', onBridgeReadyold);
+		}
+	}else{
+		if(get()>='5.5'){
+			onBridgeReady();
+		}else{
+			onBridgeReadyold();
+		}
+   	}
+   	
+        
+    </script>
+</head>
+<div class="content" id="pincontainer">
+	<ul class="cardCoupons">
+    	<li><p>优惠：有可用的优惠券</p></p><a class="btn_Receive" >选择使用</a></li>
+        <div class="clear"></div>
+    </ul>
+</div>
+</html>
+

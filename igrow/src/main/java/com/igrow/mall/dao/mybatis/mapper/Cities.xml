@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.CityDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="CitiesRM" type="Tcities">
+		<id property="id" column="id" />
+		<result property="citySn" column="city_sn"/>
+		<result property="name" column="name"/>
+		<result property="provinceSn" column="province_sn"/>
+		<association property="province" column="province_sn" javaType="Tprovinces"
+				select="com.igrow.mall.dao.mybatis.intf.ProvinceDao.findBySn"/>
+		<collection property="areas" javaType="ArrayList" column="city_sn" ofType="Tareas" 
+			select="com.igrow.mall.dao.mybatis.intf.AreaDao.findListByCitySn"/>	
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="CitiesRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_cities WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="Tcities"  keyProperty="id" useGeneratedKeys="true" flushCache="true">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_cities 
+				(province_sn,city_sn,name)
+					values
+				(#{provinceSn},#{citySn},#{name})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="Tcities" flushCache="true">
+		<![CDATA[
+			update t_cities 
+				  set
+						province_sn = #{provinceSn},
+						city_sn = #{citySn},
+						name = #{name},
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="Tcities" flushCache="true">
+		<![CDATA[
+			delete from t_cities
+				   where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="true">
+		<![CDATA[
+			SELECT count("id") FROM t_cities
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="CitiesRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_cities
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="CitiesRM" useCache="true">
+			SELECT * FROM t_cities  
+				
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="true">
+		<![CDATA[
+			SELECT count(`id`) FROM t_cities
+		]]>
+	</select>
+	
+	<!--9依据城市编号查询城市  -->
+	<select id="findBySn" parameterType="String" resultMap="CitiesRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_cities WHERE city_sn = #{citySn}
+				LIMIT 0 ,1
+		]]>
+	</select>
+	
+	
+	<!--1.查询  -->
+	<select id="findListByProvinceSn" parameterType="String" resultMap="CitiesRM" useCache="true">
+		<![CDATA[
+			SELECT * FROM t_cities WHERE province_sn = #{provinceSn}
+		]]>
+	</select> 
+	
+	
+	
+</mapper>

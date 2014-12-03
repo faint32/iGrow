@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.AdminRoleGroupConfDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="AdminRoleGroupConfRM" type="TadminRoleGroupConf">
+		<id property="id" column="id" />
+		<result property="roleGroupId" column="role_group_id"/>
+		<result property="paramName" column="param_name"/>
+		<result property="paramValue" column="param_value"/>
+		<result property="adminUserId" column="admin_user_id"/>
+		<association property="adminUser" column="admin_user_id" javaType="TadminUser"
+				select="com.igrow.mall.dao.mybatis.intf.AdminUserDao.find"/>	
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="AdminRoleGroupConfRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_admin_role_group_conf WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="TadminRoleGroupConf"  keyProperty="id" useGeneratedKeys="true" flushCache="false">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_admin_role_group_conf 
+				(create_date,modify_date,create_operator,modify_operator)
+					values
+				(#{createDate},#{modifyDate},#{createOperator},#{modifyOperator});
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="TadminRoleGroupConf" flushCache="false">
+		<![CDATA[
+			update t_admin_role_group_conf 
+				  set
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="TadminRoleGroupConf" flushCache="false">
+		<![CDATA[
+			delete from t_admin_role_group_conf where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="false">
+		<![CDATA[
+			SELECT count("id") FROM t_admin_role_group_conf
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="AdminRoleGroupConfRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_admin_role_group_conf
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="AdminRoleGroupConfRM" useCache="false">
+			SELECT * FROM t_admin_role_group_conf where 1=1
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="false">
+			SELECT count(`id`) FROM t_admin_role_group_conf where 1=1
+	</select>
+	
+		<!--9.查询  -->
+	<select id="findByAdminUserId" parameterType="int" resultMap="AdminRoleGroupConfRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_admin_role_group_conf WHERE 1=1 and admin_user_id = #{id}
+				LIMIT 0 ,1
+		]]>
+	</select>
+	
+	
+</mapper>

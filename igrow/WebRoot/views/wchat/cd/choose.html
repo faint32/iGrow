@@ -1,0 +1,204 @@
+﻿ <script type="text/javascript">
+        var serurl = "http://www.1ct.cc";
+		var appId = localStorage.l_appId ,
+	 	locationId = 271720134,
+		signType = "SHA1",
+		cardSign = localStorage.l_cardSign, //动态
+		cardId = "",
+		cardType = "",
+		timeStamp = localStorage.l_timeStamp,
+		nonceStr= "123123";
+        
+        var ua = navigator.userAgent,
+        	is_ios = /(iPhone|iPad|iPod|iOS)/i.test(ua),
+        	is_android = /(Android)/i.test(ua); 
+      	//获取微信版本号：例如5.2.1
+        function get(){
+	        var reg = /MicroMessenger\/([\d\.]+)/i,
+	        	ret = ua.match(reg);
+	        if (ret && ret[1]){
+	        	return ret[1];
+	        }
+        	return false;
+        }
+        var opfunc = {
+        	"cp-1":function(a, b){
+        		return a < b;
+        	 },
+        	"cp0":function(a, b){
+        		return a == b;
+        	 },
+        	"cp1":function(a, b){
+        		return a > b;
+        	},
+        };
+        
+      //判断版本跟传入的version比较
+      //version为字符串：5.0.1
+      //op = -1小于 0等于 1大于
+      //如果 mmversion <op> version 返回true，否则返回false，如果浏览器不是微信内置webview则返回undefined
+      function cpVersion(version, op, canEq){
+      	var mmversion = get();
+      	if (!mmversion){
+      		return;//如果浏览器不是微信内置webview则返回undefined
+      	}
+      	mmversion = mmversion.split(".");
+      	version = version.split(".");
+      	//5.2.380最后一位是versioncode 不加入判断 所以pop掉
+      	mmversion.pop();
+      	//version.pop();//传递进来比较的version不要理解versioncode这个！
+      	var mmv, v;
+     	var cp = opfunc["cp" + op];
+      	for(var i=0, len=Math.max(mmversion.length,version.length); i<len;++i){
+      		mmv = mmversion[i] || 0;
+      		v = version[i] || 0;
+      		mmv = parseInt(mmv) || 0;
+      		v = parseInt(v) || 0;
+      		var eq = opfunc["cp0"](mmv, v);
+      		if (eq){
+      			continue;
+      		}
+      		return cp(mmv, v);
+      	}
+      	//返回
+      	return (!!canEq||op == 0) ? true : false;
+      }
+      
+      function eqVersion(version){
+   	  	return cpVersion(version, 0);
+   	  }
+   	  function gtVersion(version, canEq){
+   	  	return cpVersion(version, 1, canEq);
+   	  }
+   	  function ltVersion(version, canEq){
+   	  	return cpVersion(version, -1, canEq);
+   	  }
+   	  function isIOS(){
+   	  	return is_ios;
+   	  }
+   	  function isAndroid(){
+   	  	return is_android;
+   	  }
+   	  function getPlatform(){
+	  	if (isIOS()){
+	   	  return "ios";
+	   	}else if(isAndroid()){
+	   	  return "android";
+	   	}
+	  	return "unknown";
+   	  }
+   	  //定义版本号
+   	 var banben = get();
+   	 // 
+   	 function onBridgeReadyold() {
+   		$('.tip_usedOrNot').click(function(e) {
+   			WeixinJSBridge.invoke('chooseCard', {
+	   			"app_id": appId,
+	   			"location_id": locationId,
+	   			"sign_type": signType,
+	   			"card_sign": cardSign,
+	   			"card_id": cardId,
+	   			"card_type": cardType,
+	   			"time_stamp": timeStamp,
+	   			"nonce_str": nonceStr
+   			},
+	   		function(res) {
+   				if(res.err_msg == 'choose_card:ok') {
+   					alert('成功')
+	    		}else if(res.err_msg == 'choose_card:fail'){
+	    			alert('失败')
+	    		}else if(res.err_msg == 'choose_card:cancel'){
+	    			alert('取消')
+	    		}else{
+	    			alert('未知');
+	    		}
+	   		}); 
+   		});
+   	 }
+   	 
+   	 function onBridgeReady() {
+   		$('.tip_usedOrNot').click(function(e) {
+   			WeixinJSBridge.invoke('chooseCard', {
+   				"app_id": appId,
+   	   			"location_id": locationId,
+   	   			"sign_type": signType,
+   	   			"card_sign": cardSign,
+   	   			"card_id": cardId,
+   	   			"card_type": cardType,
+   	   			"time_stamp": timeStamp,
+   	   			"nonce_str": nonceStr
+   			},
+	   		function(res) {
+   				if(res.err_msg == 'choose_card:ok') {
+   					//alert('成功');
+   					//alert(res.choose_card_info.substring(1,res.choose_card_info.length-1));
+   					var choose_card_info = res.choose_card_info.substring(1,res.choose_card_info.length-1);
+   					var obj = eval("("+choose_card_info+")");        
+   					$("#cardid").val(obj.card_id);
+   					$("#encryptcode").val(obj.encrypt_code);
+   					var cardid = obj.card_id;
+	   				$.ajax({
+	   				    url : '/borMall/wchat/cd/info.do?id=' + cardid,
+	   					type : 'POST',
+	   					async : false,
+	   					timeout : 100, //超时时间设置，单位毫秒
+	   					dataType : "json",
+	   					data : null,
+	   					success : function(data) {
+	   						if(data.reduce != null){
+	   							 var cardvalue = parseFloat(data.reduce);
+	   							 $("#total").html(parseFloat(parseFloat($("#totalHidden").val())-cardvalue).toFixed(2));
+	   							 $("#cardTitle").html(data.titel);
+	   							 $("#cardStatus").html("已使用");
+	   						}
+	   					},
+	   				});
+   				
+   				
+	    		}else if(res.err_msg == 'choose_card:fail'){
+	    			//alert('失败');
+	    			 $("#total").html(parseFloat($("#totalHidden").val()).toFixed(2));
+					 $("#cardTitle").html("有可用微信卡券");
+					 $("#cardStatus").html("未使用");
+					 $("#cardid").val("");
+	   				 $("#encryptcode").val("");
+	    		}else if(res.err_msg == 'choose_card:cancel'){
+	    			//alert('取消');
+	    			 $("#total").html(parseFloat($("#totalHidden").val()).toFixed(2));
+					 $("#cardTitle").html("有可用微信卡券");
+					 $("#cardStatus").html("未使用");
+					 $("#cardid").val("");
+	   				 $("#encryptcode").val("");
+	    		}else{
+	    			//alert('未知');
+	    			 $("#total").html(parseFloat($("#totalHidden").val()).toFixed(2));
+					 $("#cardTitle").html("");
+					 $("#cardStatus").html("未使用");
+					 $("#cardid").val("");
+	   				 $("#encryptcode").val("");
+	    		}
+	   		});
+   		});
+   	}
+   	
+   	//WeixinJSBridge是否加载完成
+   	if(typeof WeixinJSBridge == "undefined") {
+		if(get()>='5.5'){
+			document.addEventListener('WeixinJSBridgeReady', onBridgeReady);
+		}else{
+			document.addEventListener('WeixinJSBridgeReady', onBridgeReadyold);
+		}
+	}else{
+		if(get()>='5.5'){
+			onBridgeReady();
+		}else{
+			onBridgeReadyold();
+		}
+   	}
+   	
+        
+    </script>
+
+<span class="tip_font_n27" id="pincontainer">优惠：<i class="fontColor_blue" id="cardTitle">有可用微信卡券</i></span><span class="tip_usedOrNot" id="cardStatus">未使用</span>
+
+

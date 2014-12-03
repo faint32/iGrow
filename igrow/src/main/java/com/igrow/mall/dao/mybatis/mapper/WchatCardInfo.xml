@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.WchatCardInfoDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="WchatCardInfoRM" type="TwchatCardInfo">
+		<id property="id" column="id" />
+		<result property="cardId" column="card_id"/>
+		<result property="cardType" column="card_type"/>
+		<result property="cardTypeName" column="card_type_name"/>
+		<result property="cardTitle" column="card_title"/>
+		<result property="reduceCost" column="reduce_cost"/>
+		<result property="leastCost" column="least_cost"/>
+		<result property="totalQuantity" column="total_quantity"/>
+		<result property="totalGetQuantity" column="total_get_quantity"/>
+		<result property="totalUseQuantity" column="total_use_quantity"/>
+		<result property="status" column="status"/>
+		<result property="customUrl" column="custom_url"/>
+		<result property="signature" column="signature"/>
+		<result property="timestamp" column="timestamp"/>
+		<result property="createTime" column="create_time"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="createDate" column="create_date"/>
+		<result property="modifyDate" column="modify_date"/>
+		<result property="createOperator" column="create_operator"/>
+		<result property="modifyOperator" column="modify_operator"/>		
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="WchatCardInfoRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_card_info WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="TwchatCardInfo"  keyProperty="id" useGeneratedKeys="true" flushCache="false">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_wchat_card_info 
+				(card_id,card_type,card_type_name,card_title,reduce_cost,least_cost,
+				total_quantity,total_get_quantity,total_use_quantity,status,custom_url,
+				signature,timestamp,create_time,update_time,
+				create_date,modify_date,create_operator,modify_operator)
+					values
+				(#{cardId},#{cardType},#{cardTypeName},#{cardTitle},#{reduceCost},#{leastCost},
+				#{totalQuantity},#{totalGetQuantity},#{totalUseQuantity},#{status},#{customUrl},
+				#{signature},#{timestamp},#{createTime},#{updateTime},
+				#{createDate},#{modifyDate},#{createOperator},#{modifyOperator})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="TwchatCardInfo" flushCache="false">
+		<![CDATA[
+			update t_wchat_card_info 
+				  set
+						card_id = #{cardId},
+						card_type = #{cardType},
+						card_type_name = #{cardTypeName},
+						card_title = #{cardTitle},
+						reduce_cost = #{reduceCost},
+						least_cost = #{leastCost},
+						total_quantity = #{totalQuantity},
+						total_get_quantity = #{totalGetQuantity},
+						total_use_quantity = #{totalUseQuantity},
+						status = #{status},
+						signature = #{signature},
+						timestamp = #{timestamp},
+						create_time = #{createTime},
+						update_time = #{updateTime},
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="TwchatCardInfo" flushCache="false">
+		<![CDATA[
+			delete from t_wchat_card_info where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="false">
+		<![CDATA[
+			SELECT count("id") FROM t_wchat_card_info
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="WchatCardInfoRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_card_info
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="WchatCardInfoRM" useCache="false">
+			SELECT * FROM t_wchat_card_info  where 1 = 1  
+				 <if test="orderBy != null and order != null">
+				 	ORDER BY ${orderBy} ${order}
+				 </if>
+				 <if test="firstIndex != null and pageSize != null">
+				 	LIMIT #{firstIndex} ,#{pageSize}
+				 </if>
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="false">
+			SELECT count(`id`) FROM t_wchat_card_info where 1 = 1  
+			
+	</select>
+	
+	<select id="findByCardId" parameterType="String" resultMap="WchatCardInfoRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_wchat_card_info WHERE card_id = #{cardId} LIMIT 0,1;
+		]]>
+	</select>
+	
+		
+	
+	
+	
+</mapper>

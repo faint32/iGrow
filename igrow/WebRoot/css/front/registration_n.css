@@ -1,0 +1,105 @@
+.registration_box{ z-index:2; width:1118px; background-color:rgba(255, 255, 255, 0.9); background:url(images/bg_header.png) repeat \9;border:1px solid #e4e4e4; height:645px; position:absolute; top:109px; left:50%; margin-left:-559px;}
+body{overflow:auto}
+.tab_nav{ height:58px; width:100%; background-color:#f4f4f4; border-bottom:1px solid #e4e4e4;}
+.tabwarp{ width:500px;height:58px; line-height:58px; color:#666; padding-left:19%; margin-left:95px;}
+.tabwarp li{ width:50%; float:left; height:58px; position:relative; text-align:center; position:relative;}
+.tabwarp li a{ display:block; cursor:pointer; position:absolute; left:0; top:-1px; width:100%; height:100%;}
+.selectTag a{ color:#fff;}
+.ge_r0{ display:none; width:26px; height:10px; position:absolute; left:50%; bottom:-11px; margin-left:-13px;}
+.selectTag .ge_r0{ display:block;}
+
+.tagContent{ display:none;}
+.selectTag{ display:block;}
+li.selectTag a{ background-color:#2eaae4; color:#fff; height:60px;}
+
+.tagContent{ display:none;}
+.selectTag{ display:block;}
+
+.content_table_in{ width:595px; margin:21px 0 0 0; padding-left:19%;}
+.tagContent ul li{ padding:10px 0; width:100%}
+.tagContent ul li label{ text-align:right; padding-right:20px; color:#666; width:75px; float:left; height:38px; line-height:38px; font-size:16px;}
+.tagContent ul li input{ height:20px; padding:9px 5px; width:488px; line-height:20px; border:1px solid #ccc; border-radius:3px; background-color:#fff; font-size:14px; outline:none; font-family: arial, Microsoft YaHei, Microsoft YaHei, Apple LiSung Light;}
+.tagContent ul li input:focus, .textarea_text:focus{ border:1px solid #3db3f2;  outline:none}
+.tagContent ul li.btn_submit_line{ padding-top:19px;}
+.tagContent ul li label.message_font{ line-height:30px;}
+.textarea_text{ width:488px; border:1px solid #ccc; border-radius:3px; height:128px; padding:5px; font-size:14px; font-family: arial, Microsoft YaHei, Microsoft YaHei, Apple LiSung Light;}
+
+a.btn_submit{ width:176px; height:48px; line-height:48px; background-color:#ef540c; border-radius:3px; text-align:center; color:#fff; float:right; cursor:pointer; margin-top:0px;}
+
+.tagContent ul li input.red_wrong{border:1px solid #f00;}
+
+.tip_layer{ background:url(images/TipBox.png) no-repeat 0 0; width:400px; height:206px; left:50%; top:50%; margin:-103px 0 0 -200px; position:fixed; display:none}
+.tip_in{ padding-top:65px; text-align:center}
+.toHome{ padding-top:11px; color:#3db3f2; font-size:12px; font-family:"SimSun";}
+.tip_font{ color:#000; }
+.tip_font img{ vertical-align:middle;}
+.return_home{ width:216px; height:36px; line-height:36px;font-family:"SimSun"; cursor:pointer; color:#fff; background-color:#3db3f2; border-radius:3px; font-size:16px; font-weight:bold; display:block; margin:0 auto; margin-top:18px;}
+.return_home:hover{ color:#fff; background-color:#5abef4;}
+.img_area{ width:100%; height:100%; overflow:hidden;}
+
+.layer_s{ width:100%; height:100%; position:fixed; left:0; top:0; display:none; z-index:100}
+.black_layer{ position:absolute; left:0; top:0; width:100%; height:100%; opacity:0.6; background-color:#000;}
+.tip_layer{ background:url(images/TipBox.png) no-repeat 0 0; width:386px; height:192px; left:50%; top:50%; margin:-96px 0 0 -193px; position:fixed; display:block}
+.tip_in{ padding-top:59px; text-align:center}
+.toHome{ padding-top:10px; color:#3db3f2; font-size:12px; font-family:"SimSun";}
+.tip_font{ color:#666; font-size:20px; }
+.tip_font img{ vertical-align:top;}
+.return_home{ width:216px; height:36px; line-height:36px;font-family:"SimSun"; cursor:pointer; color:#fff; background-color:#3db3f2; border-radius:3px; font-size:16px; font-weight:bold; display:block; margin:0 auto; margin-top:18px;}
+.return_home:hover{ color:#fff; background-color:#5abef4;}
+.tip_font img{ padding-right:12px;}
+
+#Contenter{ overflow:hidden; position:relative;}
+.cloud01{ position:absolute; left:0; bottom:39%; z-index:1; width:418px; height:303px; 
+	-webkit-animation: moving 10s infinite alternate linear;
+    -moz-animation: moving 10s infinite alternate linear;
+	-ms-animation: moving 10s infinite alternate linear;
+	-o-animation: moving 10s infinite alternate linear;
+    animation: moving 10s infinite alternate linear;
+}
+@-webkit-keyframes moving{
+	0%{ left:0; bottom:39%}
+	100%{ left:200px; bottom:39%;}
+}
+@-moz-keyframes moving{
+	0%{ left:0; bottom:39%}
+	100%{ left:200px; bottom:39%;}
+}
+@-ms-keyframes moving{
+	0%{ left:0; bottom:39%}
+	100%{ left:200px; bottom:39%;}
+}
+@-o-keyframes moving{
+	0%{ left:0; bottom:39%}
+	100%{ left:200px; bottom:39%;}
+}
+@keyframes moving{
+	0%{ left:0; bottom:39%}
+	100%{ left:200px; bottom:39%;}
+}
+.cloud02{ position:absolute; right:100px; bottom:39%; z-index:1; width:386px; height:345px; 
+	-webkit-animation: moving02 10s infinite alternate linear;
+    -moz-animation: moving02 10s infinite alternate linear;
+	-ms-animation: moving02 10s infinite alternate linear;
+	-o-animation: moving02 10s infinite alternate linear;
+    animation: moving02 10s infinite alternate linear;
+}
+@-webkit-keyframes moving02{
+	0%{ right:100px; bottom:39%}
+	100%{ right:0; bottom:39%;}
+}
+@-moz-keyframes moving02{
+	0%{ right:100px; bottom:39%}
+	100%{ right:0; bottom:39%;}
+}
+@-ms-keyframes moving02{
+	0%{ right:100px; bottom:39%}
+	100%{ right:0; bottom:39%;}
+}
+@-o-keyframes moving02{
+	0%{ right:100px; bottom:39%}
+	100%{ right:0; bottom:39%;}
+}
+@keyframes moving02{
+	0%{ right:100px; bottom:39%}
+	100%{ right:0; bottom:39%;}
+}

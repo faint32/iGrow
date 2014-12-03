@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.igrow.mall.dao.mybatis.intf.MemberVerifyDao">
+
+	<!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->  
+	<!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/> 
+	
+	<!--返回map1-->
+	<resultMap id="MemberVerifyRM" type="TmemberVerify">
+		<id property="id" column="id" />
+		<result property="mobile" column="mobile"/>
+		<result property="vcode" column="vcode"/>
+		<result property="allotedTime" column="alloted_time"/>
+		<result property="createDate" column="create_date"/>
+		<result property="modifyDate" column="modify_date"/>
+		<result property="createOperator" column="create_operator"/>
+		<result property="modifyOperator" column="modify_operator"/>		
+	</resultMap>
+
+	<!--1.查询  -->
+	<select id="find" parameterType="int" resultMap="MemberVerifyRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_member_verify_info WHERE id = #{id}
+		]]>
+	</select>
+	
+	<!--2.插入-->
+	<insert id="insert" parameterType="TmemberVerify"  keyProperty="id" useGeneratedKeys="true" flushCache="false">
+		<!-- <selectKey resultType="int" keyProperty="id" order="AFTER" >
+         	SELECT LAST_INSERT_ID()
+        </selectKey>  -->
+		<![CDATA[
+			insert into t_member_verify_info 
+				(vcode,mobile,alloted_time,create_date,modify_date,create_operator,modify_operator)
+					values
+				(#{vcode},#{mobile},#{allotedTime},
+				#{createDate},#{modifyDate},#{createOperator},#{modifyOperator})
+		]]>
+	</insert>
+	
+	<!--3.修改-->
+	<update id="update" parameterType="TmemberVerify" flushCache="false">
+		<![CDATA[
+			update t_member_verify_info 
+				  set
+						vcode = #{vcode},
+						mobile = #{mobile},
+						alloted_time = #{allotedTime},
+						modify_date = #{modifyDate},
+						modify_operator = #{modifyOperator}
+					where id = #{id}
+		]]>
+	</update>
+	
+	<!--4.删除-->
+	<delete id="delete" parameterType="TmemberVerify" flushCache="false">
+		<![CDATA[
+			delete from t_member_verify_info
+				   where id = #{id}
+		]]>
+	</delete>
+	
+	<!--5.查询总数量 -->
+	<select id="getTotalCount" resultType="long" useCache="false">
+		<![CDATA[
+			SELECT count("id") FROM t_member_verify_info
+		]]>
+	</select>
+	
+	<!--6.查询总记录集 -->
+	<select id="findAllList" resultMap="MemberVerifyRM" useCache="false">
+		<![CDATA[
+			SELECT * FROM t_member_verify_info
+		]]>
+	</select>
+	
+	<!--7.依据条件查询记录集 -->
+	<select id="findListBy" parameterType="hashMap" resultMap="MemberVerifyRM" useCache="false">
+			SELECT * FROM t_member_verify_info  
+				
+	</select>
+	
+	<!--8.依据条件查询数量 -->
+	<select id="getCountBy" parameterType="hashMap" resultType="long" useCache="false">
+		<![CDATA[
+			SELECT count(`id`) FROM t_member_verify_info
+		]]>
+	</select>
+	
+	<!--9.依据手机号码查询最后一个验证码 -->
+	<select id="findLastByMobile" parameterType="String" resultMap="MemberVerifyRM" useCache="false">
+			SELECT * FROM t_member_verify_info  
+				where mobile = #{mobile}  
+				order by create_date desc
+				LIMIT 0 ,1
+				
+	</select>
+	
+	
+</mapper>
